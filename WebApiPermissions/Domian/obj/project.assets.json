@@ -14,9 +14,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Cris\\Desktop\\orquestationPermisos\\WebApiPermissions\\Domian\\Domian.csproj",
-      "projectName": "Domian",
-      "projectPath": "C:\\Users\\Cris\\Desktop\\orquestationPermisos\\WebApiPermissions\\Domian\\Domian.csproj",
+      "projectUniqueName": "C:\\Users\\Cris\\Desktop\\orquestationPermisos\\WebApiPermissions\\Domian\\Domain.csproj",
+      "projectName": "Domain",
+      "projectPath": "C:\\Users\\Cris\\Desktop\\orquestationPermisos\\WebApiPermissions\\Domian\\Domain.csproj",
       "packagesPath": "C:\\Users\\Cris\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Cris\\Desktop\\orquestationPermisos\\WebApiPermissions\\Domian\\obj\\",
       "projectStyle": "PackageReference",

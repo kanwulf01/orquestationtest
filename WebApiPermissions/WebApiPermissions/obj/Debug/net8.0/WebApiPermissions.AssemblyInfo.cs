@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebApiPermissions")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a114ede81b36af16b4c8d4a1e50ec0e31cb1d0a8")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebApiPermissions")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebApiPermissions")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

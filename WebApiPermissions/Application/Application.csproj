@@ -8,17 +8,16 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="14.0.0" />
+    <PackageReference Include="MediatR" Version="12.5.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domian\Domian.csproj" />
+    <ProjectReference Include="..\Domian\Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Permisos\Commands\CreatePermisos\" />
-    <Folder Include="Permisos\Commands\UpdatePermisos\" />
-    <Folder Include="Permisos\Queries\" />
+    <Folder Include="Permisos\Queries\GetProductById\" />
   </ItemGroup>
 
 </Project>

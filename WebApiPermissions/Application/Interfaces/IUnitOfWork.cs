@@ -8,7 +8,7 @@ namespace Application.Interfaces
 {
     public interface IUnitOfWork: IDisposable
     {
-        IPermisosRepository PermisosRepository { get; }
+        IPermisosRepository Permisos { get; }
 
         ITipoPermisosRepository TipoPermisosRepository { get; }
 

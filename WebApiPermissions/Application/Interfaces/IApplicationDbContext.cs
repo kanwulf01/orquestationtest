@@ -1,4 +1,4 @@
-﻿using Domian.Entities;
+﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,8 +10,8 @@ namespace Application.Interfaces
 {
     internal interface IApplicationDbContext
     {
-        DbSet<Permisos> Permiso {  get; }  
-        DbSet<TipoPermisos> TipoPermiso {  get; }  
+        DbSet<Permiso> Permisos {  get; }  
+        DbSet<TipoPermiso> TipoPermisos {  get; }  
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

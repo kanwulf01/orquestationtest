@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "xBRpjnZZ6aIBCFtuIjrpSEQDJ2Ikciq7DTPrqz4JYcY=",
+  "Source": "WebApiPermissions",
+  "BasePath": "_content/WebApiPermissions",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

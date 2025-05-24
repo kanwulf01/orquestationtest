@@ -12,7 +12,7 @@ namespace Application.Mapping
     {
         public PermisosProfile() {
 
-            CreateMap<PermisosProfile, PermissionsDto>().ReverseMap();
+            CreateMap<PermisosProfile, PermisosDto>().ReverseMap();
 
 
         }    
