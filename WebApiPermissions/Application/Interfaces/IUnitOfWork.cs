@@ -10,7 +10,7 @@ namespace Application.Interfaces
     {
         IPermisosRepository Permisos { get; }
 
-        ITipoPermisosRepository TipoPermisosRepository { get; }
+        //ITipoPermisosRepository TipoPermisosRepository { get; }
 
         Task<int> CompleteAsync(CancellationToken cancellationToken = default);
     }

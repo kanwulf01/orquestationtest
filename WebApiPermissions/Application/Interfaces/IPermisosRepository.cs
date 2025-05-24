@@ -9,13 +9,13 @@ namespace Application.Interfaces
 {
     public interface IPermisosRepository
     {
-        Task<Domain.Entities.Permiso> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+        Task<Permiso> GetByIdAsync(int id, CancellationToken cancellationToken = default);
 
-        Task<IEnumerable<Domain.Entities.Permiso>> GetAllAsync(CancellationToken cancellationToken = default);
+        Task<IEnumerable<Permiso>> GetAllAsync(CancellationToken cancellationToken = default);
 
-        Task AddAsync(Domain.Entities.Permiso permisos, CancellationToken cancellationToken = default);
+        Task AddAsync(Permiso permisos, CancellationToken cancellationToken = default);
 
-        void Update(Domain.Entities.Permiso permisos); // Aca EF puede seguir el cambio en la DB
+        void Update(Permiso permisos); // Aca EF puede seguir el cambio en la DB
 
 
     }

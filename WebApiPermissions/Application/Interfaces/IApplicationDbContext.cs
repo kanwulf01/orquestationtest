@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Interfaces
 {
-    internal interface IApplicationDbContext
+    public interface IApplicationDbContext
     {
         DbSet<Permiso> Permisos {  get; }  
         DbSet<TipoPermiso> TipoPermisos {  get; }  
