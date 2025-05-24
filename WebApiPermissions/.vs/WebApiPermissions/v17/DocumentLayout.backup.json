@@ -1,0 +1,224 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{CB9F0735-3631-4ABD-8C4C-A3D8365854E8}|Application\\Application.csproj|c:\\users\\cris\\source\\repos\\webapipermissions\\application\\application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{CB9F0735-3631-4ABD-8C4C-A3D8365854E8}|Application\\Application.csproj|solutionrelative:application\\application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CB9F0735-3631-4ABD-8C4C-A3D8365854E8}|Application\\Application.csproj|c:\\users\\cris\\source\\repos\\webapipermissions\\application\\mapping\\tipopermisos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CB9F0735-3631-4ABD-8C4C-A3D8365854E8}|Application\\Application.csproj|solutionrelative:application\\mapping\\tipopermisos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CB9F0735-3631-4ABD-8C4C-A3D8365854E8}|Application\\Application.csproj|c:\\users\\cris\\source\\repos\\webapipermissions\\application\\mapping\\permisosprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CB9F0735-3631-4ABD-8C4C-A3D8365854E8}|Application\\Application.csproj|solutionrelative:application\\mapping\\permisosprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CB9F0735-3631-4ABD-8C4C-A3D8365854E8}|Application\\Application.csproj|c:\\users\\cris\\source\\repos\\webapipermissions\\application\\interfaces\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CB9F0735-3631-4ABD-8C4C-A3D8365854E8}|Application\\Application.csproj|solutionrelative:application\\interfaces\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CB9F0735-3631-4ABD-8C4C-A3D8365854E8}|Application\\Application.csproj|c:\\users\\cris\\source\\repos\\webapipermissions\\application\\interfaces\\ipermisosrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CB9F0735-3631-4ABD-8C4C-A3D8365854E8}|Application\\Application.csproj|solutionrelative:application\\interfaces\\ipermisosrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CB9F0735-3631-4ABD-8C4C-A3D8365854E8}|Application\\Application.csproj|c:\\users\\cris\\source\\repos\\webapipermissions\\application\\interfaces\\itipopermisosrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CB9F0735-3631-4ABD-8C4C-A3D8365854E8}|Application\\Application.csproj|solutionrelative:application\\interfaces\\itipopermisosrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CB9F0735-3631-4ABD-8C4C-A3D8365854E8}|Application\\Application.csproj|c:\\users\\cris\\source\\repos\\webapipermissions\\application\\interfaces\\iapplicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CB9F0735-3631-4ABD-8C4C-A3D8365854E8}|Application\\Application.csproj|solutionrelative:application\\interfaces\\iapplicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{249E8831-75E4-4565-BCAE-86FBC9A3C4AF}|Domian\\Domian.csproj|c:\\users\\cris\\source\\repos\\webapipermissions\\domian\\entities\\tipopermisos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{249E8831-75E4-4565-BCAE-86FBC9A3C4AF}|Domian\\Domian.csproj|solutionrelative:domian\\entities\\tipopermisos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{249E8831-75E4-4565-BCAE-86FBC9A3C4AF}|Domian\\Domian.csproj|c:\\users\\cris\\source\\repos\\webapipermissions\\domian\\entities\\permisos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{249E8831-75E4-4565-BCAE-86FBC9A3C4AF}|Domian\\Domian.csproj|solutionrelative:domian\\entities\\permisos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{249E8831-75E4-4565-BCAE-86FBC9A3C4AF}|Domian\\Domian.csproj|c:\\users\\cris\\source\\repos\\webapipermissions\\domian\\domian.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{249E8831-75E4-4565-BCAE-86FBC9A3C4AF}|Domian\\Domian.csproj|solutionrelative:domian\\domian.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CB9F0735-3631-4ABD-8C4C-A3D8365854E8}|Application\\Application.csproj|c:\\users\\cris\\source\\repos\\webapipermissions\\application\\dtos\\permissionsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CB9F0735-3631-4ABD-8C4C-A3D8365854E8}|Application\\Application.csproj|solutionrelative:application\\dtos\\permissionsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CB9F0735-3631-4ABD-8C4C-A3D8365854E8}|Application\\Application.csproj|c:\\users\\cris\\source\\repos\\webapipermissions\\application\\dtos\\permissiontypedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CB9F0735-3631-4ABD-8C4C-A3D8365854E8}|Application\\Application.csproj|solutionrelative:application\\dtos\\permissiontypedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 395,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Application",
+              "DocumentMoniker": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Application\\Application.csproj",
+              "RelativeDocumentMoniker": "Application\\Application.csproj",
+              "ToolTip": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Application\\Application.csproj",
+              "RelativeToolTip": "Application\\Application.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-05-24T04:58:53.401Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TipoPermisos.cs",
+              "DocumentMoniker": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Application\\Mapping\\TipoPermisos.cs",
+              "RelativeDocumentMoniker": "Application\\Mapping\\TipoPermisos.cs",
+              "ToolTip": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Application\\Mapping\\TipoPermisos.cs",
+              "RelativeToolTip": "Application\\Mapping\\TipoPermisos.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-24T04:57:39.226Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "PermisosProfile.cs",
+              "DocumentMoniker": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Application\\Mapping\\PermisosProfile.cs",
+              "RelativeDocumentMoniker": "Application\\Mapping\\PermisosProfile.cs",
+              "ToolTip": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Application\\Mapping\\PermisosProfile.cs",
+              "RelativeToolTip": "Application\\Mapping\\PermisosProfile.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-24T04:55:45.109Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IUnitOfWork.cs",
+              "DocumentMoniker": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Application\\Interfaces\\IUnitOfWork.cs",
+              "RelativeDocumentMoniker": "Application\\Interfaces\\IUnitOfWork.cs",
+              "ToolTip": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Application\\Interfaces\\IUnitOfWork.cs",
+              "RelativeToolTip": "Application\\Interfaces\\IUnitOfWork.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-24T04:53:11.798Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ITipoPermisosRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Application\\Interfaces\\ITipoPermisosRepository.cs",
+              "RelativeDocumentMoniker": "Application\\Interfaces\\ITipoPermisosRepository.cs",
+              "ToolTip": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Application\\Interfaces\\ITipoPermisosRepository.cs",
+              "RelativeToolTip": "Application\\Interfaces\\ITipoPermisosRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAABRAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-24T04:52:43.834Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IPermisosRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Application\\Interfaces\\IPermisosRepository.cs",
+              "RelativeDocumentMoniker": "Application\\Interfaces\\IPermisosRepository.cs",
+              "ToolTip": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Application\\Interfaces\\IPermisosRepository.cs",
+              "RelativeToolTip": "Application\\Interfaces\\IPermisosRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-24T04:49:49.88Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Application\\Interfaces\\IApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Application\\Interfaces\\IApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Application\\Interfaces\\IApplicationDbContext.cs",
+              "RelativeToolTip": "Application\\Interfaces\\IApplicationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-24T04:46:59.223Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "TipoPermisos.cs",
+              "DocumentMoniker": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Domian\\Entities\\TipoPermisos.cs",
+              "RelativeDocumentMoniker": "Domian\\Entities\\TipoPermisos.cs",
+              "ToolTip": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Domian\\Entities\\TipoPermisos.cs",
+              "RelativeToolTip": "Domian\\Entities\\TipoPermisos.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-24T03:51:27.948Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Permisos.cs",
+              "DocumentMoniker": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Domian\\Entities\\Permisos.cs",
+              "RelativeDocumentMoniker": "Domian\\Entities\\Permisos.cs",
+              "ToolTip": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Domian\\Entities\\Permisos.cs",
+              "RelativeToolTip": "Domian\\Entities\\Permisos.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAowB0AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-24T03:51:17.8Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Domian",
+              "DocumentMoniker": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Domian\\Domian.csproj",
+              "RelativeDocumentMoniker": "Domian\\Domian.csproj",
+              "ToolTip": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Domian\\Domian.csproj",
+              "RelativeToolTip": "Domian\\Domian.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-05-24T03:48:11.579Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "PermissionTypeDto.cs",
+              "DocumentMoniker": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Application\\DTOs\\PermissionTypeDto.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\PermissionTypeDto.cs",
+              "ToolTip": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Application\\DTOs\\PermissionTypeDto.cs",
+              "RelativeToolTip": "Application\\DTOs\\PermissionTypeDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-24T02:57:57.595Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "PermissionsDto.cs",
+              "DocumentMoniker": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Application\\DTOs\\PermissionsDto.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\PermissionsDto.cs",
+              "ToolTip": "C:\\Users\\Cris\\source\\repos\\WebApiPermissions\\Application\\DTOs\\PermissionsDto.cs",
+              "RelativeToolTip": "Application\\DTOs\\PermissionsDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-24T02:56:42.55Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
