@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Permisos.Commands.UpdatePermisos
 {
-    public class UpdatePermisosCommand : IRequest<PermisosDto>
+    public class UpdatePermisosCommand : IRequest<PermisosDto?>
     {
         public int Id { get; set; }
 

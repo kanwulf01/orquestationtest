@@ -1,5 +1,6 @@
 ﻿using Application.DTOs;
 using AutoMapper;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Application.Mapping
     {
         public TipoPermisosProfile() {
 
-            CreateMap<TipoPermisosProfile, PermisosTypeDto>().ReverseMap();
+            CreateMap<TipoPermiso, PermisosTypeDto>().ReverseMap();
         }
     }
 }

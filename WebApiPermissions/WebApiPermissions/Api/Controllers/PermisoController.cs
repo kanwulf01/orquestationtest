@@ -1,0 +1,77 @@
+﻿using Application.DTOs;
+using Application.Permisos.Commands.CreatePermisos;
+using Application.Permisos.Commands.UpdatePermisos;
+using Application.Permisos.Queries.GetAllProducts;
+using Application.Permisos.Queries.GetPermisosById;
+using MediatR;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Mvc;
+
+namespace WebApiPermissions.Api.Controllers
+{
+
+    [ApiController]
+    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
+    public class PermisoController: ControllerBase
+    {
+        private readonly IMediator _mediator;
+
+        public PermisoController(IMediator mediator ) 
+        {
+            _mediator = mediator;
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<PermisosDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllPermisos(CancellationToken cancellationToken)
+        {
+            var query = new GetAllPermisosQuery();
+            var permisos = await _mediator.Send(query, cancellationToken);
+            return Ok(permisos);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(PermisosDto), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreatePermiso([FromBody] CreatePermisosCommand command, CancellationToken cancellationToken)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var permisoDto = await _mediator.Send(command, cancellationToken);
+            return CreatedAtAction("Permiso Creado", new { id = permisoDto.Id }, permisoDto);
+        }
+
+
+        [HttpGet("{id:int}")]
+        [ProducesResponseType(typeof(PermisosDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetPermisoById(int id, CancellationToken cancellationToken)
+        {
+            var query = new GetPermisosByIdQuery(id);
+            var permiso = await _mediator.Send(query, cancellationToken);
+            return permiso != null ? Ok(permiso) :NotFound();
+        }
+
+        [HttpPut("{id:int}")]
+        [ProducesResponseType(typeof(PermisosDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateProduct(int id, [FromBody] UpdatePermisosCommand command, CancellationToken cancellationToken)
+        {
+            if (id != command.Id)
+            {
+                return BadRequest("ID en la ruta no coincide con el ID en el cuerpo de la solicitud.");
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var updatedPermisoDto = await _mediator.Send(command, cancellationToken);
+            return updatedPermisoDto != null ? Ok(updatedPermisoDto) : NotFound();
+        }
+    }
+}

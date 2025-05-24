@@ -12,9 +12,13 @@ namespace Infrastructure.Repositories
     {
         private readonly ApplicationDbContext _context;
         private  IPermisosRepository? _permisosRepository; // => throw new NotImplementedException();
+        private ITipoPermisosRepository _tipoPermisosRepository;
 
         public UnitOfWork(ApplicationDbContext context) { _context = context; }
+
+
         IPermisosRepository IUnitOfWork.Permisos => _permisosRepository ??= new PermisoRepository(_context);
+        ITipoPermisosRepository IUnitOfWork.TipoPermisos => _tipoPermisosRepository ??= new TipoPermisoRepository(_context);
 
         public async Task<int> CompleteAsync(CancellationToken cancellationToken = default)
         {

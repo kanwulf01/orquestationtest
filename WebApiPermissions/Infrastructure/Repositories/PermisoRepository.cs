@@ -26,9 +26,9 @@ namespace Infrastructure.Repositories
             return await _context.Permisos.AsNoTracking().ToListAsync(cancellationToken);
         }
 
-        public async Task<Permiso> GetByIdAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Permiso?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return await _context.Permisos.FindAsync([id], cancellationToken);
         }
 
         public void Update(Permiso permisos)

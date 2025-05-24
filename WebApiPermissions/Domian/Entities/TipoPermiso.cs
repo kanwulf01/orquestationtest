@@ -33,15 +33,10 @@ namespace Domain.Entities
         }
 
         public void Update(
-            int id,
             string descripcion
         )
         {
-            if (id < 0) throw new ArgumentOutOfRangeException(nameof(id));
-
             if (string.IsNullOrEmpty(descripcion)) throw new ArgumentException("La descripción no puede ser vacio");
-
-            Id = id;
             Descripcion = descripcion;
 
         }

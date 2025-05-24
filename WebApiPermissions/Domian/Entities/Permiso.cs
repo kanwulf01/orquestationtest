@@ -47,14 +47,13 @@ namespace Domain.Entities
         }
 
         public void Update(
-            int id,
             string nombreEmpleado,
             string apellidoEmpleado,
             int tipoPermiso,
             DateTime fechaPermiso
         )
         {
-            if (id < 0) throw new ArgumentOutOfRangeException(nameof(id));
+            //if (id < 0) throw new ArgumentOutOfRangeException(nameof(id));
 
             if (string.IsNullOrEmpty(nombreEmpleado)) throw new ArgumentException("El nombre del empleado no puede ser vacio");
             if (string.IsNullOrEmpty(apellidoEmpleado)) throw new ArgumentException("El apellido del empleado no puede ser vacio");

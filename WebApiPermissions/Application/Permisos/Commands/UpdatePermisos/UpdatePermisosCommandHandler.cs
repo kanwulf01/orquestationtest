@@ -33,7 +33,6 @@ namespace Application.Permisos.Commands.UpdatePermisos
             }
 
             permiso.Update(
-                request.Id,
                 request.NombreEmpleado,
                 request.ApellidoEmpleado,
                 request.TipoPermiso,

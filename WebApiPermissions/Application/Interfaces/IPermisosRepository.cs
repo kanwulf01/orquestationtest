@@ -9,7 +9,7 @@ namespace Application.Interfaces
 {
     public interface IPermisosRepository
     {
-        Task<Permiso> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+        Task<Permiso?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
 
         Task<IEnumerable<Permiso>> GetAllAsync(CancellationToken cancellationToken = default);
 

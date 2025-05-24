@@ -14,9 +14,12 @@ namespace Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration) 
+        public static IServiceCollection AddInfrastructureServices(
+            this IServiceCollection services, 
+            IConfiguration configuration
+        ) 
         {
-            var connectionString = configuration.GetConnectionString("PENDIENTE");
+            var connectionString = configuration.GetConnectionString("DBLOCAL");
 
             if (String.IsNullOrEmpty(connectionString)) {
                 throw new InvalidOperationException("La conexion a la DB no existe");
@@ -34,6 +37,7 @@ namespace Infrastructure
             services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
             services.AddScoped<IPermisosRepository, PermisoRepository>();
+            services.AddScoped<ITipoPermisosRepository, TipoPermisoRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;

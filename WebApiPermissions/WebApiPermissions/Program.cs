@@ -1,3 +1,9 @@
+using Application.Mapping;
+using Application.Permisos.Commands.CreatePermisos;
+using Infrastructure;
+using MediatR; // Para AddMediatR
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,16 +13,25 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreatePermisosCommand).Assembly));
+
+builder.Services.AddAutoMapper(typeof(PermisosProfile).Assembly);
+
+builder.Services.AddInfrastructureServices(builder.Configuration);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (true)
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
