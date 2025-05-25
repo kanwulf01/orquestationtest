@@ -1,8 +1,10 @@
 ﻿using Application.DTOs;
+using Application.Interfaces;
 using Application.Permisos.Commands.CreatePermisos;
 using Application.Permisos.Commands.UpdatePermisos;
 using Application.Permisos.Queries.GetAllProducts;
 using Application.Permisos.Queries.GetPermisosById;
+using Infrastructure.Messaging;
 using MediatR;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
@@ -15,10 +17,14 @@ namespace WebApiPermissions.Api.Controllers
     public class PermisoController: ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly IKafkaServices _producer;
+        private readonly IConfiguration _configuration;
 
-        public PermisoController(IMediator mediator ) 
+        public PermisoController(IMediator mediator, IKafkaServices producer, IConfiguration configuration) 
         {
             _mediator = mediator;
+            _producer = producer;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -73,5 +79,16 @@ namespace WebApiPermissions.Api.Controllers
             var updatedPermisoDto = await _mediator.Send(command, cancellationToken);
             return updatedPermisoDto != null ? Ok(updatedPermisoDto) : NotFound();
         }
+
+        //Test Kafka Producer
+
+        [HttpPost("publish")]
+        public async Task<IActionResult> PublishMessage([FromBody] MessageRequest request)
+        {
+            await _producer.ProduceAsync(request.Topic, request.Content);
+            return Ok(new { Message = "Mensaje enviado correctamente" });
+        }
+
+        public record MessageRequest(string Topic, string Content);
     }
 }

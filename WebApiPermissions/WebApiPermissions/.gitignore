@@ -1,0 +1,74 @@
+## Archivos generados por Visual Studio
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Build Results
+bin/
+obj/
+out/
+[Bb]uild/
+[Ll]og/
+
+## Archivos de dependencias
+packages/
+*.nupkg
+*.snupkg
+*.nuspec
+
+## Archivos generados por dotnet
+project.lock.json
+project.fragment.lock.json
+artifacts/
+*.deps.json
+*.runtimeconfig.json
+
+## Archivos de publicación
+publish/
+app.publish/
+
+## Configuración del sistema operativo
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+## Logs
+*.log
+
+## Archivos temporales
+*.tmp
+*.temp
+*.bak
+*.old
+*.orig
+
+## Archivos de usuario específicos
+*.swp
+*.sln.ide
+.idea/
+
+## Archivos de certificados o secretos (si los tienes en local)
+*.pfx
+*.key
+*.pem
+*.crt
+secrets.json
+
+## Archivos de cobertura de código
+coverage/
+coverage.cobertura.xml
+coverage.opencover.xml
+*.coverage
+*.coveragexml
+TestResults/
+
+## Archivos de configuración de Rider
+.idea/
+
+## Archivos de configuración de Resharper
+_ReSharper*/
+*.DotSettings.user

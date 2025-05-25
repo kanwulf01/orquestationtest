@@ -1,10 +1,16 @@
-using Application.Mapping;
+﻿using Application.Mapping;
 using Application.Permisos.Commands.CreatePermisos;
 using Infrastructure;
-using MediatR; // Para AddMediatR
+using Infrastructure.Messaging;
 
+Console.WriteLine("⏳ Delaying startup to wait for Kafka...");
+await Task.Delay(TimeSpan.FromSeconds(2)); 
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Kafka Services
+//builder.Services.AddSingleton<KafkaProducer>();
+builder.Services.AddHostedService<KafkaConsumer>();
 
 // Add services to the container.
 
@@ -37,4 +43,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+await app.RunAsync();

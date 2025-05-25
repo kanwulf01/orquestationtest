@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Infrastructure.Messaging;
 using Infrastructure.Persistence;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +40,8 @@ namespace Infrastructure
             services.AddScoped<IPermisosRepository, PermisoRepository>();
             services.AddScoped<ITipoPermisosRepository, TipoPermisoRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            //Kafka Service Producer
+            services.AddScoped<IKafkaServices, KafkaProducer>();
 
             return services;
         }
