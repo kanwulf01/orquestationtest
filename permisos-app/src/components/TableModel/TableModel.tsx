@@ -12,8 +12,12 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { Button, MenuItem, OutlinedInput, Select, TextField, useTheme, type SelectChangeEvent, type Theme } from '@mui/material';
+import { Button, MenuItem, OutlinedInput, Select, Tab, TextField, useTheme, type SelectChangeEvent, type Theme } from '@mui/material';
 import type { PropsTableModel } from '../../Models/Models';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 function getStyles(name: string, personName: string[], theme: Theme) {
   return {
@@ -67,15 +71,41 @@ const types:Array<SelectItems> = [
 
 
 
-
-function Row(props: { row: ReturnType<typeof createData2> }) {
+function Row(props: { 
+  row: ReturnType<typeof createData2>, 
+  // setNombreEmpleado?: (value: string) => void, 
+  // setApellidoEmpleado?: (value: string) => void, 
+  // setTipoPermiso?: (value: number) => void, 
+  // setFechaPermiso?: (value: string) => void,
+  // nombreEmpleado?: string,
+  // apellidoEmpleado?: string,
+  // tipoPermiso?: number,
+  // fechaPermiso?: string
+}) {
+  
   const { row } = props;
   const [open, setOpen] = React.useState(false);
 
+  const [nombreEmpleado, setNombreEmpleado] = React.useState<string>('');
+  const [apellidoEmpleado, setApellidoEmpleado] = React.useState<string>('');
+  const [tipoPermiso, setTipoPermiso] = React.useState<number>(0);
+  const [fechaPermiso, setFechaPermiso] = React.useState<string>('');
+
   console.log('Row', row);
+  // if(!setNombreEmpleado) {
+  //   console.error('setNombreEmpleado is not defined');
+  //   return null;
+  // }
 
   const theme = useTheme();
   const [personName, setPersonName] = React.useState<string[]>([]);
+
+  React.useEffect(() => {
+    setNombreEmpleado(row.nombreEmpleado);
+    setApellidoEmpleado(row.apellidoEmpleado);
+    setTipoPermiso(row.tipoPermiso);
+    setFechaPermiso(row.fechaPermiso);
+  }, [row]);
 
   const handleChange = (event: SelectChangeEvent<typeof personName>) => {
     console.log('handleChange', event);
@@ -87,6 +117,31 @@ function Row(props: { row: ReturnType<typeof createData2> }) {
       typeof value === 'string' ? value.split(',') : value,
     );
   };
+
+  const SendUpdatePermisos = () => {
+    console.log('SendUpdatePermisos', row);
+  }
+
+  const onChangeFechaPermiso = (value: any) => {
+    console.log('onChangeFechaPermiso', value);
+    if(value && value.$d) {
+      const date = new Date(value.$d);
+      const formattedDate = date.toLocaleString('es-CO', {
+        timeZone: 'America/Bogota',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      }).replace(',', '');
+      setFechaPermiso(formattedDate);
+      console.log("Fecha formateada:", formattedDate);
+    } else {
+      console.error('Invalid date value', value);
+    }
+  }
 
   return (
     <React.Fragment>
@@ -117,11 +172,12 @@ function Row(props: { row: ReturnType<typeof createData2> }) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell><TextField  id="nombreEmpleado" label="NombreEmpleado" variant="outlined" /></TableCell>
-                    <TableCell><TextField id="apellidoEmpleado" label="ApellidoEmpleado" variant="outlined" /></TableCell>
-                    <TableCell align="right"><TextField type='date' id="fechaPermiso" label="FechaPermiso"  /></TableCell>
+                    <TableCell><TextField  id="nombreEmpleado" label="NombreEmpleado" variant="outlined" value={nombreEmpleado} onChange={(e)=>setNombreEmpleado(e.target.value)} /></TableCell>
+                    <TableCell><TextField id="apellidoEmpleado" label="ApellidoEmpleado" variant="outlined" value={apellidoEmpleado} onChange={(e)=>setApellidoEmpleado(e.target.value)} /></TableCell>
+                    
                     <TableCell align="right">
                         <Select
+                            label="TipoPermiso"
                             labelId="demo-multiple-name-label"
                             id="demo-multiple-name"
                             value={personName}
@@ -140,7 +196,15 @@ function Row(props: { row: ReturnType<typeof createData2> }) {
                             ))}
                             </Select>
                     </TableCell>
-                    <TableCell align="right"><Button>Modificar</Button></TableCell>
+                    {/* <TableCell align="right"><TextField type='date' id="fechaPermiso" label="FechaPermiso" value={"2023-10-10 01:00:10"} /></TableCell> */}
+                    <TableCell align="right">
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoContainer components={['DateTimePicker']}>
+                          <DateTimePicker label="Basic date time picker" onChange={(e)=>onChangeFechaPermiso(e)}/>
+                        </DemoContainer>
+                      </LocalizationProvider>
+                    </TableCell>
+                    <TableCell align="right"><Button onClick={()=>SendUpdatePermisos()}>Modificar</Button></TableCell>
                   </TableRow>
                 </TableHead>
                 
@@ -177,6 +241,9 @@ export default function TableModel({tittle, columns, listPermisos, listTipoPermi
     console.log('TableModel', tittle);
     console.log('TableModel', columns);
     console.log('TableModel', listTipoPermisos);
+
+    
+
     let copyListPermisos = listPermisos.map((item) => {
         return createData2(item.id, item.nombreEmpleado, item.apellidoEmpleado, item.tipoPermiso, item.fechaPermiso, []);
     });
@@ -200,7 +267,17 @@ export default function TableModel({tittle, columns, listPermisos, listTipoPermi
         </TableHead>
         <TableBody>
           {copyListPermisos.map((row) => (
-            <Row key={row.nombreEmpleado} row={row} />
+            <Row key={row.nombreEmpleado} 
+              row={row} 
+              // setNombreEmpleado={setNombreEmpleado} 
+              // setApellidoEmpleado={setApellidoEmpleado} 
+              // setTipoPermiso={setTipoPermiso} 
+              // setFechaPermiso={setFechaPermiso} 
+              // nombreEmpleado={nombreEmpleado}
+              // apellidoEmpleado={apellidoEmpleado}
+              // tipoPermiso={tipoPermiso}
+              // fechaPermiso={fechaPermiso}
+            />
           ))}
         </TableBody>
       </Table>

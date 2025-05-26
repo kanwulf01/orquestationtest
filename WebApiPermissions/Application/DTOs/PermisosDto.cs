@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -13,7 +14,8 @@ namespace Application.DTOs
         public string NombreEmpleado { get; set; } = string.Empty;
         public string ApellidoEmpleado { get; set; } = string.Empty;
 
-        public int TipoPermiso { get; set; }
+        public int TipoPermisoId { get; set; }
+        public required PermisosTypeDto TipoPermiso { get; set; } = default;
 
         public DateTime FechaPermiso { get; set; }
 

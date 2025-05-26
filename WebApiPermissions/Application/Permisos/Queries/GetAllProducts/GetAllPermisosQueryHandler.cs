@@ -23,8 +23,7 @@ namespace Application.Permisos.Queries.GetAllProducts
 
         public async Task<IEnumerable<PermisosDto>> Handle(GetAllPermisosQuery request, CancellationToken cancellationToken)
         {
-            var permisos = await _permisosRepository.GetAllAsync(cancellationToken); ;
-
+            var permisos = await _permisosRepository.GetAllAsync(cancellationToken); ;        
             return _mapper.Map<IEnumerable<PermisosDto>>(permisos);
         }
     }

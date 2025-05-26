@@ -61,16 +61,13 @@ namespace WebApiPermissions.Api.Controllers
             return permiso != null ? Ok(permiso) :NotFound();
         }
 
-        [HttpPut("{id:int}")]
+        [HttpPut]
         [ProducesResponseType(typeof(PermisosDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> UpdateProduct(int id, [FromBody] UpdatePermisosCommand command, CancellationToken cancellationToken)
+        public async Task<IActionResult> UpdateProduct([FromBody] UpdatePermisosCommand command, CancellationToken cancellationToken)
         {
-            if (id != command.Id)
-            {
-                return BadRequest("ID en la ruta no coincide con el ID en el cuerpo de la solicitud.");
-            }
+           
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

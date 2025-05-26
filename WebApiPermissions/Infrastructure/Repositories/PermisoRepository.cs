@@ -23,12 +23,19 @@ namespace Infrastructure.Repositories
         public async Task<IEnumerable<Permiso>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             // Aca devolver la relacion con tipo de permisos - pendiente
-            return await _context.Permisos.AsNoTracking().ToListAsync(cancellationToken);
+            var data = await _context.Permisos
+                .Include(p => p.TipoPermiso)
+                .ToListAsync(cancellationToken);
+            //return await _context.Permisos.AsNoTracking().ToListAsync(cancellationToken);
+            return data;
         }
 
         public async Task<Permiso?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            return await _context.Permisos.FindAsync([id], cancellationToken);
+            return await _context.Permisos
+                .Include(p => p.TipoPermiso)
+                .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+            //return await _context.Permisos.FindAsync([id], cancellationToken);
         }
 
         public void Update(Permiso permisos)

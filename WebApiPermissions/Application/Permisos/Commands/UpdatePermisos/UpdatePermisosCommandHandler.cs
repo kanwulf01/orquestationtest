@@ -35,7 +35,7 @@ namespace Application.Permisos.Commands.UpdatePermisos
             permiso.Update(
                 request.NombreEmpleado,
                 request.ApellidoEmpleado,
-                request.TipoPermiso,
+                request.TipoPermisoId,
                 request.FechaPermiso
              );
 

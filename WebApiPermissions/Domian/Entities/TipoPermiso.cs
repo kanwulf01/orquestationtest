@@ -15,6 +15,9 @@ namespace Domain.Entities
         [Required]
         public string Descripcion { get; private set; } = string.Empty;
 
+        public ICollection<Permiso> Permisos { get; private set; } = new List<Permiso>();
+
+
 
         private TipoPermiso() { }
 
