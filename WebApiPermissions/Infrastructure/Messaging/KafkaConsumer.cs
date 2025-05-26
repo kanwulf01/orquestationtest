@@ -26,8 +26,8 @@ namespace Infrastructure.Messaging
                 // 1. Configuración movida a campo de clase
                 _consumerConfig = new ConsumerConfig
                 {
-                    BootstrapServers = "[kafka:BootstrapServers]",
-                    GroupId = "my-permissions",
+                    BootstrapServers = "kafka:9001",
+                    GroupId = "my-permisos",
                     AutoOffsetReset = AutoOffsetReset.Earliest,
                     EnableAutoCommit = false
                 };
@@ -38,7 +38,7 @@ namespace Infrastructure.Messaging
                     .Build();
 
                 // Configurar partición específica
-                var topic = "[kafka:TopicName]";
+                var topic = "permisos";
                 var partition = new Partition(2);
                 _topicPartition = new TopicPartition(topic, partition);
 

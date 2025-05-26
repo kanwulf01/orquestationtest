@@ -20,7 +20,8 @@ namespace Infrastructure
             IConfiguration configuration
         ) 
         {
-            var connectionString = configuration.GetConnectionString("DBLOCAL");
+            var connectionString = configuration.GetConnectionString("PermisosDB");
+            Console.WriteLine($"[%] ConnectionString en uso: {connectionString}");
 
             if (String.IsNullOrEmpty(connectionString)) {
                 throw new InvalidOperationException("La conexion a la DB no existe");

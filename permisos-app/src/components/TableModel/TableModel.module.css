@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+  /* background-color: #f0f0f0; */
+}
+
+.item {
+  flex: 1 1 calc(25% - 1rem); /* 4 elementos por fila con espacio entre ellos */
+  /* background-color: #4caf50; */
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+/* Responsividad para pantallas medianas */
+@media (max-width: 968px) {
+  .item {
+    flex: 1 1 calc(50% - 1rem); /* 2 por fila */
+  }
+}
+
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 780px) {
+  .item {
+    flex: 1 1 100%; /* 1 por fila */
+  }
+}

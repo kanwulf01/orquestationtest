@@ -47,7 +47,7 @@ namespace WebApiPermissions.Api.Controllers
             }
 
             var permisoDto = await _mediator.Send(command, cancellationToken);
-            return CreatedAtAction("Permiso Creado", new { id = permisoDto.Id }, permisoDto);
+            return Ok(permisoDto);
         }
 
 

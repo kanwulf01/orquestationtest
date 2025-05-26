@@ -1,0 +1,6 @@
+1. Si se corre la orquestación desde windows debes ejecutar los siguientes comandos
+
+En la raíz de la orquestación (al mismo nivel del archivo yaml del docker-compose)
+dos2unix DockerKafka/entrypoint.sh
+dos2unix DockerSqlServer/init-db.sh
+

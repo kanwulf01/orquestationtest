@@ -4,13 +4,26 @@ using Infrastructure;
 using Infrastructure.Messaging;
 
 Console.WriteLine("⏳ Delaying startup to wait for Kafka...");
-await Task.Delay(TimeSpan.FromSeconds(2)); 
+await Task.Delay(TimeSpan.FromSeconds(3)); 
+AppContext.SetSwitch("Switch.Microsoft.Data.SqlClient.DisableEncryption", true);
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Define una política de CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MiPoliticaCors", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+          .AllowAnyHeader()
+          .AllowAnyMethod()
+          .AllowCredentials();
+    });
+});
+
 // Kafka Services
 //builder.Services.AddSingleton<KafkaProducer>();
-builder.Services.AddHostedService<KafkaConsumer>();
+//builder.Services.AddHostedService<KafkaConsumer>();
 
 // Add services to the container.
 
@@ -40,6 +53,8 @@ if (true)
 //app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors("MiPoliticaCors");
 
 app.MapControllers();
 

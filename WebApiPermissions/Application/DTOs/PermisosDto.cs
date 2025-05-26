@@ -10,7 +10,6 @@ namespace Application.DTOs
     public class PermisosDto
     {
         public int Id { get; set; }
-
         public string NombreEmpleado { get; set; } = string.Empty;
         public string ApellidoEmpleado { get; set; } = string.Empty;
 

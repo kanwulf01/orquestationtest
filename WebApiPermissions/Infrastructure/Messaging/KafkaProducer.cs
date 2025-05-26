@@ -21,7 +21,7 @@ namespace Infrastructure.Messaging
 
             var producerConfig = new ProducerConfig
             {
-                BootstrapServers = "[kafka:BootstrapServers]",
+                BootstrapServers = "kafka:9001",
                 MessageTimeoutMs = 30000,
                 EnableDeliveryReports = true,
                 Acks = Acks.Leader

@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+
+  
+#Kafka engine service
+  # kafka:
+  #   build:
+  #     context: ./Dockerkafka
+  #   hostname: kafka
+  #   container_name: kafka
+  #   command: >
+  #     bash -c "
+  #       # 1) Formatear almacenamiento (sólo la primera vez)
+  #       if [ ! -f /var/lib/kafka/data/.cluster_id ]; then
+  #         kafka-storage.sh format \
+  #           --cluster-id $(kafka-storage.sh random-uuid) \
+  #           --ignore-formatted
+  #       fi
+  #       # 2) Arrancar el broker+controller
+  #       /etc/confluent/docker/run
+  #     "
+  #   networks:
+  #     - my-network
+  #   ports:
+  #     - "9001:9001"
+  #     # - "9093:9093"
+  #   volumes:
+  #     - ./DockerKafka/server.properties:/opt/kafka/config/kraft/server.properties
+  #   # entrypoint:
+  #   #   - sh
+  #   #   - -c
+  #   #   - |
+  #   #     /init-topics.sh
+  #   environment:
+  #     # ---- Modo KRaft ----
+  #     KAFKA_PROCESS_ROLES: broker,controller
+  #     KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+  #     KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+  #     KAFKA_KRAFT_BROKER_ID: 1
+  #     # ---- Listeners IPv4 explícito ----
+  #     KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9001,CONTROLLER://0.0.0.0:9093
+  #     KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9001,CONTROLLER://kafka:9093
+  #     KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+  #     # ---- Replicación de topics internos ----
+  #     KAFKA_OFFSETS_TOPIC_NUM_PARTITIONS: 50
+  #     KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+  #     KAFKA_OFFSETS_TOPIC_MIN_ISR: 2
+  #     # ---- Forzar IPv4 en la JVM ----
+  #     KAFKA_JVM_PERFORMANCE_OPTS: "-Djava.net.preferIPv4Stack=true"
+  
+  #database engine service
+  sqlserver:
+    build: ./DockerSqlServer
+    container_name: sqlserver
+    networks:
+      - my-network
+    env_file:
+      - ./DockerSqlServer/.env
+    ports:
+      - "1433:1433"
+    # volumes:
+    #   - sqlvolume:/var/opt/mssql  
+#Backend Side
+  productservice:
+    build:
+      context: ./WebApiPermissions
+    container_name: permisosservice
+    networks:
+      - my-network
+    # environment:
+    #   - ConnectionStrings__PermisosDB=Server=sqlserver,1433;Database=PermisosDB;User Id=SA;Password=TuStrong!Passw0rd;
+    ports:
+      - "32768:8080"
+    depends_on:
+      #- kafka
+      - sqlserver
+    command: /start
+
+volumes:
+  sqlvolume:
+
+
+networks:
+  my-network:
+    name: webapplication1_my-network 

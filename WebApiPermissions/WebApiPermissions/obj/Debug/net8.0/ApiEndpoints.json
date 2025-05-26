@@ -139,6 +139,22 @@
     ]
   },
   {
+    "ContainingType": "WebApiPermissions.Api.Controllers.PermisoController",
+    "Method": "PublishMessage",
+    "RelativePath": "api/Permiso/publish",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "WebApiPermissions.Api.Controllers.PermisoController\u002BMessageRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "WebApiPermissions.Api.Controllers.TipoPermisoController",
     "Method": "GetAllTipoPermisos",
     "RelativePath": "api/TipoPermiso",
