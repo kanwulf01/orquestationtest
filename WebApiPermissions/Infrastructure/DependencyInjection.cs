@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Application.Services;
 using Infrastructure.Messaging;
 using Infrastructure.Persistence;
 using Infrastructure.Repositories;
@@ -41,6 +42,7 @@ namespace Infrastructure
             services.AddScoped<IPermisosRepository, PermisoRepository>();
             services.AddScoped<ITipoPermisosRepository, TipoPermisoRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IPermisosAppService, PermisosAppService>();
             //Kafka Service Producer
             services.AddScoped<IKafkaServices, KafkaProducer>();
 

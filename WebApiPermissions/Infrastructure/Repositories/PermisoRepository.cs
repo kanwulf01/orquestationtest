@@ -18,6 +18,7 @@ namespace Infrastructure.Repositories
         public async Task AddAsync(Permiso permisos, CancellationToken cancellationToken = default)
         {
             await _context.Permisos.AddAsync(permisos, cancellationToken);
+
         }
 
         public async Task<IEnumerable<Permiso>> GetAllAsync(CancellationToken cancellationToken = default)

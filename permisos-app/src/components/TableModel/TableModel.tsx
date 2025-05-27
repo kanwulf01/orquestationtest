@@ -12,39 +12,21 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { Button, MenuItem, OutlinedInput, Select, Tab, TextField, useTheme, type SelectChangeEvent, type Theme } from '@mui/material';
+import { Button, CircularProgress, FormControl, InputLabel,TextField} from '@mui/material';
 import type { PropsTableModel } from '../../Models/Models';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-
-function getStyles(name: string, personName: string[], theme: Theme) {
-  return {
-    fontWeight: personName.includes(name)
-      ? theme.typography.fontWeightMedium
-      : theme.typography.fontWeightRegular,
-  };
-}
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
+import MuiSelect from '../SelectModel/SelectModel';
+import type { PermisosDtoPost } from '../../Models/Response';
+import DatePickerModel from '../DatePicker/DatePicker';
 
 
 function createData2(
   Id: number,
   nombreEmpleado: string,
   apellidoEmpleado: string,
-  tipoPermiso: number,
+  tipoPermiso: {
+    descripcion: string,
+    id: number
+  },
   fechaPermiso: string,
   history:[]
 ) {
@@ -59,83 +41,87 @@ function createData2(
 }
 
 
-
-interface SelectItems {
-    key: number;
-    value: string;
-}
-const types:Array<SelectItems> = [
-  {key:1, value: "Vacaciones"},
-  {key:2, value: "Enfermedad"},
-];
-
-
-
 function Row(props: { 
   row: ReturnType<typeof createData2>, 
-  // setNombreEmpleado?: (value: string) => void, 
-  // setApellidoEmpleado?: (value: string) => void, 
-  // setTipoPermiso?: (value: number) => void, 
-  // setFechaPermiso?: (value: string) => void,
-  // nombreEmpleado?: string,
-  // apellidoEmpleado?: string,
-  // tipoPermiso?: number,
-  // fechaPermiso?: string
+  listTipoPermisos?: Array<{value: number | string, label: string}>,
+  UpdatePermisos: (permiso: PermisosDtoPost) => Promise<PermisosDtoPost>;
+  // function:React.Node
 }) {
   
-  const { row } = props;
+  const { row, listTipoPermisos, UpdatePermisos } = props;
   const [open, setOpen] = React.useState(false);
 
   const [nombreEmpleado, setNombreEmpleado] = React.useState<string>('');
   const [apellidoEmpleado, setApellidoEmpleado] = React.useState<string>('');
   const [tipoPermiso, setTipoPermiso] = React.useState<number>(0);
+  const [tipoPermisoV, setTipoPermisoV] = React.useState<string>("");
   const [fechaPermiso, setFechaPermiso] = React.useState<string>('');
-
-  console.log('Row', row);
-  // if(!setNombreEmpleado) {
-  //   console.error('setNombreEmpleado is not defined');
-  //   return null;
-  // }
-
-  const theme = useTheme();
-  const [personName, setPersonName] = React.useState<string[]>([]);
+  const [loading, setLoading] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     setNombreEmpleado(row.nombreEmpleado);
     setApellidoEmpleado(row.apellidoEmpleado);
-    setTipoPermiso(row.tipoPermiso);
+    setTipoPermiso(row.tipoPermiso.id);
     setFechaPermiso(row.fechaPermiso);
+    setTipoPermisoV(row.tipoPermiso.id.toString());
+    // console.log('useEffect row', row);
   }, [row]);
 
-  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-    console.log('handleChange', event);
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
+
+  const findTipoPermisoLabel = (id: number | string) => {
+    const tipoPermisoItem = listTipoPermisos?.find(item => item.value === id);
+    // console.log('findTipoPermisoLabel', tipoPermisoItem, id);
+    return tipoPermisoItem ? tipoPermisoItem.label : '';
   };
 
-  const SendUpdatePermisos = () => {
-    console.log('SendUpdatePermisos', row);
+  const SendUpdatePermisos = async () => {
+    if(!nombreEmpleado || !apellidoEmpleado || !tipoPermiso || !fechaPermiso) {
+      alert('Todos los campos son obligatorios');
+      return;
+    }
+    const dataPost:PermisosDtoPost = {
+      id: row.Id,
+      nombreEmpleado: nombreEmpleado,
+      apellidoEmpleado: apellidoEmpleado,
+      tipoPermisoId: tipoPermiso,
+      fechaPermiso: fechaPermiso,
+      tipoPermiso: 0, // Este campo puede ser utilizado para indicar el tipo de permiso si es necesario
+      tipoPermisoLabel: findTipoPermisoLabel(tipoPermisoV)
+    };
+
+    for(const i in dataPost) {
+      if(dataPost[i as keyof PermisosDtoPost] === '' || dataPost[i as keyof PermisosDtoPost] === null) {
+        console.error(`El campo ${i} es obligatorio`);
+        alert(`El campo Tipo de Permiso es obligatorio seleccionarlo`);
+        return;
+      }
+    }
+    setLoading(true);
+    const sendUpdateData = await UpdatePermisos(dataPost);
+
+    if(sendUpdateData) {
+      setLoading(false);
+    }else {
+      setLoading(false);
+    }
+
   }
 
   const onChangeFechaPermiso = (value: any) => {
-    console.log('onChangeFechaPermiso', value);
+    // console.log('onChangeFechaPermiso', value);
     if(value && value.$d) {
       const date = new Date(value.$d);
-      const formattedDate = date.toLocaleString('es-CO', {
-        timeZone: 'America/Bogota',
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-      }).replace(',', '');
+      // const formattedDate = date.toLocaleString('es-CO', {
+      //   timeZone: 'America/Bogota',
+      //   year: 'numeric',
+      //   month: '2-digit',
+      //   day: '2-digit',
+      //   hour: '2-digit',
+      //   minute: '2-digit',
+      //   second: '2-digit',
+      //   hour12: false
+      // }).replace(',', '');
+      const formattedDate = date.toISOString();
       setFechaPermiso(formattedDate);
       console.log("Fecha formateada:", formattedDate);
     } else {
@@ -159,7 +145,7 @@ function Row(props: {
           {row.nombreEmpleado}
         </TableCell>
         <TableCell align="left">{row.apellidoEmpleado}</TableCell>
-        <TableCell align="left">{row.tipoPermiso}</TableCell>
+        <TableCell align="left">{row.tipoPermiso.descripcion}</TableCell>
         <TableCell align="left">{row.fechaPermiso}</TableCell>
       </TableRow>
       <TableRow>
@@ -172,55 +158,61 @@ function Row(props: {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell><TextField  id="nombreEmpleado" label="NombreEmpleado" variant="outlined" value={nombreEmpleado} onChange={(e)=>setNombreEmpleado(e.target.value)} /></TableCell>
-                    <TableCell><TextField id="apellidoEmpleado" label="ApellidoEmpleado" variant="outlined" value={apellidoEmpleado} onChange={(e)=>setApellidoEmpleado(e.target.value)} /></TableCell>
+                    <TableCell>
+                      <TextField  
+                      id="nombreEmpleado" 
+                      label="NombreEmpleado" 
+                      variant="outlined" 
+                      value={nombreEmpleado} 
+                      onChange={(e)=>setNombreEmpleado(e.target.value)} 
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <TextField 
+                      id="apellidoEmpleado" 
+                      label="ApellidoEmpleado" 
+                      variant="outlined" 
+                      value={apellidoEmpleado} 
+                      onChange={(e)=>setApellidoEmpleado(e.target.value)} />
+                    </TableCell>
                     
                     <TableCell align="right">
-                        <Select
-                            label="TipoPermiso"
-                            labelId="demo-multiple-name-label"
-                            id="demo-multiple-name"
-                            value={personName}
-                            onChange={handleChange}
-                            input={<OutlinedInput label="Name" />}
-                            MenuProps={MenuProps}
-                            >
-                            {types.map((name) => (
-                                <MenuItem
-                                key={name.key}
-                                value={name.value}
-                                style={getStyles(name.value, personName, theme)}
-                                >
-                                {name.value}
-                                </MenuItem>
-                            ))}
-                            </Select>
+                        <FormControl fullWidth required>
+                        <InputLabel id="tipo-label">Tipo de Permiso</InputLabel>
+                          <MuiSelect
+                            label="Tipo Permiso"
+                            options={listTipoPermisos?.map((item) => ({
+                              value: item.value,
+                              label: item.label,
+                            })) || []}
+                            value={tipoPermisoV}
+                            onChange={(value) => {
+                              console.log('onChange tipoPermiso', value);
+                              setTipoPermiso(parseInt(value as string, 10));
+                              setTipoPermisoV(value as string);
+                            }}
+                     >
+                        </MuiSelect>
+                        </FormControl>
                     </TableCell>
-                    {/* <TableCell align="right"><TextField type='date' id="fechaPermiso" label="FechaPermiso" value={"2023-10-10 01:00:10"} /></TableCell> */}
                     <TableCell align="right">
-                      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DemoContainer components={['DateTimePicker']}>
-                          <DateTimePicker label="Basic date time picker" onChange={(e)=>onChangeFechaPermiso(e)}/>
-                        </DemoContainer>
-                      </LocalizationProvider>
+                      <FormControl fullWidth required>
+                      {/* <InputLabel id="tipo-label">Tipo de Permiso</InputLabel> */}
+                      {<DatePickerModel onChangeFechaPermiso={onChangeFechaPermiso} label={"Fecha de Permiso"}/>}
+                      </FormControl>
                     </TableCell>
-                    <TableCell align="right"><Button onClick={()=>SendUpdatePermisos()}>Modificar</Button></TableCell>
+                    {loading?<>
+                      <TableCell align="right">
+                        <CircularProgress />
+                      </TableCell>
+                    </>:<>
+                      <TableCell align="right"><Button onClick={()=>SendUpdatePermisos()}>Modificar</Button></TableCell>
+                    </>}
                   </TableRow>
                 </TableHead>
                 
                 <TableBody>
-                  {/* {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.date}
-                      </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
-                      </TableCell>
-                    </TableRow>
-                  ))} */}
+                  
                 </TableBody>
                 <>
                 </>
@@ -236,17 +228,18 @@ function Row(props: {
 
 
 
-export default function TableModel({tittle, columns, listPermisos, listTipoPermisos}:PropsTableModel) {
-    console.log('TableModel lista permisos', listPermisos);
-    console.log('TableModel', tittle);
-    console.log('TableModel', columns);
-    console.log('TableModel', listTipoPermisos);
-
-    
+export default function TableModel({columns, listPermisos, listTipoPermisos, UpdatePermisos}:PropsTableModel) {
 
     let copyListPermisos = listPermisos.map((item) => {
-        return createData2(item.id, item.nombreEmpleado, item.apellidoEmpleado, item.tipoPermiso, item.fechaPermiso, []);
+      let descripcionTipoPermiso = "";
+      let tipoPermisoId = 0;
+      if(item.tipoPermiso && item.tipoPermiso) {
+      descripcionTipoPermiso = item.tipoPermiso.descripcion;
+      tipoPermisoId = item.tipoPermiso.id;
+      } 
+      return createData2(item.id, item.nombreEmpleado, item.apellidoEmpleado, {descripcion:descripcionTipoPermiso, id:tipoPermisoId  }, item.fechaPermiso, []);
     });
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
@@ -269,14 +262,8 @@ export default function TableModel({tittle, columns, listPermisos, listTipoPermi
           {copyListPermisos.map((row) => (
             <Row key={row.nombreEmpleado} 
               row={row} 
-              // setNombreEmpleado={setNombreEmpleado} 
-              // setApellidoEmpleado={setApellidoEmpleado} 
-              // setTipoPermiso={setTipoPermiso} 
-              // setFechaPermiso={setFechaPermiso} 
-              // nombreEmpleado={nombreEmpleado}
-              // apellidoEmpleado={apellidoEmpleado}
-              // tipoPermiso={tipoPermiso}
-              // fechaPermiso={fechaPermiso}
+              listTipoPermisos={listTipoPermisos}
+              UpdatePermisos={UpdatePermisos}
             />
           ))}
         </TableBody>

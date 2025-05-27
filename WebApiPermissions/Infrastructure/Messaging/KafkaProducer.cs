@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Messaging
@@ -33,12 +34,13 @@ namespace Infrastructure.Messaging
                 .Build();
         }
 
-        public async Task ProduceAsync(string topic, string message)
+        public async Task ProduceAsync<T>(string topic, T message)
         {
             try
             {
+                var json = JsonSerializer.Serialize(message);
                 var deliveryResult = await _producer.ProduceAsync(topic,
-                    new Message<Null, string> { Value = message });
+                    new Message<Null, string> { Value = json });
 
                 _logger.LogInformation($"Entregado a: {deliveryResult.TopicPartitionOffset}");
             }

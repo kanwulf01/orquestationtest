@@ -2,52 +2,73 @@ version: '3.8'
 
 services:
 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.10.2
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.monitoring.enabled=false
+      - xpack.ml.enabled=false
+      - xpack.watcher.enabled=false
+      - xpack.graph.enabled=false
+      - xpack.logstash.enabled=false
+      - xpack.security.http.ssl.enabled=false
+      - xpack.security.transport.ssl.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9200:9200" 
+      - "9300:9300"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+    networks:
+      - my-network
   
 #Kafka engine service
-  # kafka:
-  #   build:
-  #     context: ./Dockerkafka
-  #   hostname: kafka
-  #   container_name: kafka
-  #   command: >
-  #     bash -c "
-  #       # 1) Formatear almacenamiento (sólo la primera vez)
-  #       if [ ! -f /var/lib/kafka/data/.cluster_id ]; then
-  #         kafka-storage.sh format \
-  #           --cluster-id $(kafka-storage.sh random-uuid) \
-  #           --ignore-formatted
-  #       fi
-  #       # 2) Arrancar el broker+controller
-  #       /etc/confluent/docker/run
-  #     "
-  #   networks:
-  #     - my-network
-  #   ports:
-  #     - "9001:9001"
-  #     # - "9093:9093"
-  #   volumes:
-  #     - ./DockerKafka/server.properties:/opt/kafka/config/kraft/server.properties
-  #   # entrypoint:
-  #   #   - sh
-  #   #   - -c
-  #   #   - |
-  #   #     /init-topics.sh
-  #   environment:
-  #     # ---- Modo KRaft ----
-  #     KAFKA_PROCESS_ROLES: broker,controller
-  #     KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-  #     KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
-  #     KAFKA_KRAFT_BROKER_ID: 1
-  #     # ---- Listeners IPv4 explícito ----
-  #     KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9001,CONTROLLER://0.0.0.0:9093
-  #     KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9001,CONTROLLER://kafka:9093
-  #     KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
-  #     # ---- Replicación de topics internos ----
-  #     KAFKA_OFFSETS_TOPIC_NUM_PARTITIONS: 50
-  #     KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
-  #     KAFKA_OFFSETS_TOPIC_MIN_ISR: 2
-  #     # ---- Forzar IPv4 en la JVM ----
-  #     KAFKA_JVM_PERFORMANCE_OPTS: "-Djava.net.preferIPv4Stack=true"
+  kafka:
+    build:
+      context: ./Dockerkafka
+    hostname: kafka
+    container_name: kafka
+    command: >
+      bash -c "
+        # 1) Formatear almacenamiento (sólo la primera vez)
+        if [ ! -f /var/lib/kafka/data/.cluster_id ]; then
+          kafka-storage.sh format \
+            --cluster-id $(kafka-storage.sh random-uuid) \
+            --ignore-formatted
+        fi
+        # 2) Arrancar el broker+controller
+        /etc/confluent/docker/run
+      "
+    networks:
+      - my-network
+    ports:
+      - "9001:9001"
+      # - "9093:9093"
+    volumes:
+      - ./DockerKafka/server.properties:/opt/kafka/config/kraft/server.properties
+    # entrypoint:
+    #   - sh
+    #   - -c
+    #   - |
+    #     /init-topics.sh
+    environment:
+      # ---- Modo KRaft ----
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_KRAFT_BROKER_ID: 1
+      # ---- Listeners IPv4 explícito ----
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9001,CONTROLLER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9001,CONTROLLER://kafka:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      # ---- Replicación de topics internos ----
+      KAFKA_OFFSETS_TOPIC_NUM_PARTITIONS: 50
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+      KAFKA_OFFSETS_TOPIC_MIN_ISR: 2
+      # ---- Forzar IPv4 en la JVM ----
+      KAFKA_JVM_PERFORMANCE_OPTS: "-Djava.net.preferIPv4Stack=true"
   
   #database engine service
   sqlserver:
@@ -76,6 +97,22 @@ services:
       #- kafka
       - sqlserver
     command: /start
+
+  # Frontend Side
+  frontend:
+    build:
+      context: ./permisos-app
+    container_name: frontend
+    networks:
+      - my-network
+      # args:
+      #   VITE_API_URL: http://api:5000
+    # environment:
+    #   - VITE_API_URL=http://api:5000
+    ports:
+      - "5000:5000"
+    depends_on:
+      - productservice
 
 volumes:
   sqlvolume:

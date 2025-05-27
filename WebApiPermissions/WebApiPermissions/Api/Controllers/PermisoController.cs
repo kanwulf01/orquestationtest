@@ -16,14 +16,13 @@ namespace WebApiPermissions.Api.Controllers
     [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
     public class PermisoController: ControllerBase
     {
-        private readonly IMediator _mediator;
         private readonly IKafkaServices _producer;
+        private readonly IPermisosAppService _permisosAppService;
         private readonly IConfiguration _configuration;
 
-        public PermisoController(IMediator mediator, IKafkaServices producer, IConfiguration configuration) 
+        public PermisoController(IPermisosAppService permisosAppService, IConfiguration configuration) 
         {
-            _mediator = mediator;
-            _producer = producer;
+            _permisosAppService = permisosAppService;
             _configuration = configuration;
         }
 
@@ -32,7 +31,7 @@ namespace WebApiPermissions.Api.Controllers
         public async Task<IActionResult> GetAllPermisos(CancellationToken cancellationToken)
         {
             var query = new GetAllPermisosQuery();
-            var permisos = await _mediator.Send(query, cancellationToken);
+            var permisos = await _permisosAppService.GetlllPermisos(cancellationToken);
             return Ok(permisos);
         }
 
@@ -46,7 +45,7 @@ namespace WebApiPermissions.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var permisoDto = await _mediator.Send(command, cancellationToken);
+            var permisoDto = await _permisosAppService.CreatePermiso(command, cancellationToken);
             return Ok(permisoDto);
         }
 
@@ -56,8 +55,7 @@ namespace WebApiPermissions.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetPermisoById(int id, CancellationToken cancellationToken)
         {
-            var query = new GetPermisosByIdQuery(id);
-            var permiso = await _mediator.Send(query, cancellationToken);
+            var permiso = await _permisosAppService.GetPermisoById(id, cancellationToken);
             return permiso != null ? Ok(permiso) :NotFound();
         }
 
@@ -73,7 +71,7 @@ namespace WebApiPermissions.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var updatedPermisoDto = await _mediator.Send(command, cancellationToken);
+            var updatedPermisoDto = await _permisosAppService.UpdatePermiso(command, cancellationToken);
             return updatedPermisoDto != null ? Ok(updatedPermisoDto) : NotFound();
         }
 

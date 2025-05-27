@@ -4,3 +4,8 @@ En la raíz de la orquestación (al mismo nivel del archivo yaml del docker-comp
 dos2unix DockerKafka/entrypoint.sh
 dos2unix DockerSqlServer/init-db.sh
 
+Comandos para build y up
+
+docker-compose -f .\orquesation_permisos.yaml build
+
+docker-compose -f .\orquesation_permisos.yaml up -d 
