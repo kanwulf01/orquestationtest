@@ -1,7 +1,9 @@
-﻿using Application.Mapping;
+﻿using Application.Interfaces;
+using Application.Mapping;
 using Application.Permisos.Commands.CreatePermisos;
 using Infrastructure;
 using Infrastructure.Messaging;
+using Nest;
 
 Console.WriteLine("⏳ Delaying startup to wait for Kafka...");
 await Task.Delay(TimeSpan.FromSeconds(50)); 
@@ -20,6 +22,7 @@ builder.Services.AddCors(options =>
           //.AllowCredentials();
     });
 });
+
 
 // Kafka Services
 builder.Services.AddHostedService<KafkaConsumer>();

@@ -66,9 +66,17 @@
               "target": "Package",
               "version": "[12.5.0, )"
             },
+            "Microsoft.AspNetCore.Http.Abstractions": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[9.0.5, )"
+            },
+            "NEST": {
+              "target": "Package",
+              "version": "[7.17.5, )"
             }
           },
           "imports": [
@@ -242,6 +250,10 @@
             "Microsoft.Extensions.Hosting.Abstractions": {
               "target": "Package",
               "version": "[9.0.5, )"
+            },
+            "NEST": {
+              "target": "Package",
+              "version": "[7.17.5, )"
             }
           },
           "imports": [

@@ -128,3 +128,5 @@ C:\Users\Cris\Desktop\orquestationPermisos\WebApiPermissions\WebApiPermissions\b
 C:\Users\Cris\Desktop\orquestationPermisos\WebApiPermissions\WebApiPermissions\bin\Debug\net8.0\runtimes\win-x86\native\zlib1.dll
 C:\Users\Cris\Desktop\orquestationPermisos\WebApiPermissions\WebApiPermissions\bin\Debug\net8.0\runtimes\win-x86\native\zstd.dll
 C:\Users\Cris\Desktop\orquestationPermisos\WebApiPermissions\WebApiPermissions\obj\Debug\net8.0\WebApiPermissions.sourcelink.json
+C:\Users\Cris\Desktop\orquestationPermisos\WebApiPermissions\WebApiPermissions\bin\Debug\net8.0\Elasticsearch.Net.dll
+C:\Users\Cris\Desktop\orquestationPermisos\WebApiPermissions\WebApiPermissions\bin\Debug\net8.0\Nest.dll

@@ -17,11 +17,13 @@ namespace Application.Services
     {
         private readonly IMediator _mediator;
         private readonly IKafkaServices _producer;
+        private readonly IElasticService _elasticService;
 
-        public PermisosAppService(IMediator mediator, IKafkaServices producer)
+        public PermisosAppService(IMediator mediator, IKafkaServices producer, IElasticService elasticService)
         {
             _mediator = mediator;
             _producer = producer;
+            _elasticService = elasticService;
         }
 
         public async Task<IEnumerable<PermisosDto>> GetlllPermisos(CancellationToken cancellationToken) {
@@ -46,9 +48,21 @@ namespace Application.Services
                 Id = Guid.NewGuid(),
                 NameOperation = "REQUEST"
             };
+            
             await _producer.ProduceAsync("permisos", evt);
 
-            return await _mediator.Send(command, cancellationToken);
+            await _elasticService.EnsureIndexExistAsync();
+            var cqrs = await _mediator.Send(command, cancellationToken);
+            await _elasticService.IndexMessageCreatePermisosAsync(new PermisosPostDtos
+            {
+                Id = cqrs.Id,
+                NombreEmpleado = command.NombreEmpleado,
+                ApellidoEmpleado = command.ApellidoEmpleado,
+                TipoPermiso = command.TipoPermisoId,
+                FechaPermiso = command.FechaPermiso
+            });
+
+            return cqrs;
         }
 
         public async Task<PermisosDto?> UpdatePermiso(UpdatePermisosCommand command, CancellationToken cancellationToken)
