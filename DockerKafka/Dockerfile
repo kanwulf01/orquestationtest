@@ -15,7 +15,6 @@ RUN apt-get update && \
     mv /opt/kafka_${SCALA_VERSION}-${KAFKA_VERSION} ${KAFKA_HOME} && \
     rm kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz
 
-RUN dos2unix entrypoint.sh
 # Configurar KRaft, entrypoint y puertos
 COPY server.properties ${KAFKA_HOME}/config/kraft/
 COPY server.properties ${KAFKA_HOME}/config/

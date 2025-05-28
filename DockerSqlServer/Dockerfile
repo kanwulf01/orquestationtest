@@ -13,8 +13,6 @@ RUN apt-get update \
  && ln -s /opt/mssql-tools/bin/bcp /usr/bin/bcp \
  && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN dos2unix init-db.sh
-
 USER mssql
 
 WORKDIR /usr/src/app
