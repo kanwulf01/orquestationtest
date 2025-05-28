@@ -16,3 +16,5 @@ docker-compose -f .\orquesation_permisos.yaml build
 
 docker-compose -f .\orquesation_permisos.yaml up -d 
 
+Importante! Debera esperar al menos 60 segundos a que todos los servicios se levanten para que la orquestacion funcione correctamente.
+
