@@ -7,6 +7,7 @@ COPY ./WebApiPermissions/WebApiPermissions.csproj ./WebApiPermissions/
 COPY ./Application/Application.csproj ./Application/
 COPY ./Domian/Domain.csproj ./Domian/
 COPY ./Infrastructure/Infrastructure.csproj ./Infrastructure/
+COPY ./Test/Test.csproj ./Test/
 
 RUN dotnet restore
 

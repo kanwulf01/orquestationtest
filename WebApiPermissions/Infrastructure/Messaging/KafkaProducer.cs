@@ -39,10 +39,11 @@ namespace Infrastructure.Messaging
             try
             {
                 var json = JsonSerializer.Serialize(message);
-                var deliveryResult = await _producer.ProduceAsync(topic,
+                var topicPartition = new TopicPartition(topic, new Partition(2));
+                var deliveryResult = await _producer.ProduceAsync(topicPartition,
                     new Message<Null, string> { Value = json });
 
-                _logger.LogInformation($"Entregado a: {deliveryResult.TopicPartitionOffset}");
+                _logger.LogInformation($"*** ENTREGADO A ***: {deliveryResult.TopicPartitionOffset}");
             }
             catch (ProduceException<Null, string> e)
             {

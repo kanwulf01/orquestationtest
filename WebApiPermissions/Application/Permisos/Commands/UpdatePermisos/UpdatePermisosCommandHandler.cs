@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Permisos.Commands.UpdatePermisos
 {
-    public class UpdatePermisosCommandHandler: IRequestHandler<UpdatePermisosCommand, PermisosDto>
+    public class UpdatePermisosCommandHandler: IRequestHandler<UpdatePermisosCommand, PermisosDto?>
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;

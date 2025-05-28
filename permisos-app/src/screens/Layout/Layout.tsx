@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import { createTheme } from '@mui/material/styles';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 import { AppProvider, type Navigation } from '@toolpad/core/AppProvider';
 import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { DemoProvider, useDemoRouter } from '@toolpad/core/internal';
@@ -16,12 +16,12 @@ const NAVIGATION: Navigation = [
   {
     segment: 'dashboardPermisos',
     title: 'Liste - Actualice Permisos',
-    icon: <DashboardIcon />,
+    icon: <ListAltIcon />,
   },
   {
     segment: 'dashboardCrearPermiso',
     title: 'Registre Permiso',
-    icon: <ShoppingCartIcon />,
+    icon: <AddBoxIcon />,
     // action: <Typography>Orders</Typography>,
   },
 ];
@@ -87,6 +87,8 @@ function Page2Content({listSelectItems} : {listSelectItems?: Array<PropsTableMod
   
 }
 
+
+
 interface DemoProps {
   /**
    * Injected by the documentation to work in an iframe.
@@ -111,7 +113,6 @@ export default function Layout(props: DemoProps) {
     async function getTipoPermisos() {
       try {
         const response = await getAllTipoPermisos();
-        console.log('response', response);
         if (response) {
           const formattedResponse = response.map((item) => ({
             value: item.id,
@@ -129,14 +130,12 @@ export default function Layout(props: DemoProps) {
   }, []);
 
   useEffect(() => {
-    console.log('router', router);
-    console.log('router.pathname', router.pathname);
+
     setPathName(router.pathname);
 
     async function GetAllPermisos() {
       try {
         const response = await getAllPermisos();
-        console.log('response', response);
         if (response) {
           setListItems(response);
         } else {
@@ -158,7 +157,6 @@ export default function Layout(props: DemoProps) {
   }, [router]);
 
   const UpdatePermisos = async (permiso: PermisosDtoPost) : Promise<PermisosDtoPost> => {
-      console.log('UpdatePermisos', permiso);
       //UPDATE LISTA DE PERMISOS EN MEMORIA
       const response = await UpdatePermisoPost({
         id: permiso.id,
@@ -168,7 +166,6 @@ export default function Layout(props: DemoProps) {
         fechaPermiso: permiso.fechaPermiso,
         tipoPermiso: 0, // Assuming tipoPermiso is not needed for the update
       });
-      console.log('response', response);
       const updatedList = listItems.map(item => 
         item.id === response.id ? {
           ...item,
@@ -196,6 +193,22 @@ export default function Layout(props: DemoProps) {
     if(pathname === '/dashboardCrearPermiso') {
       return (<>
         <Page2Content listSelectItems={listSelectItems}/>
+      </>);
+    }
+
+    if(pathname === '/dashboard') {
+      return (<>
+        <Box
+            sx={{
+                py: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
+            }}
+            >
+            <div>Bienvenido al APP de los PERMISOS version DEMO!</div>
+            </Box>
       </>);
     }
 

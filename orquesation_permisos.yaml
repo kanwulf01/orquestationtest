@@ -54,8 +54,8 @@ services:
     ports:
       - "9001:9001"
       # - "9093:9093"
-    volumes:
-      - ./DockerKafka/server.properties:/opt/kafka/config/kraft/server.properties
+    # volumes:
+    #   - ./DockerKafka/server.properties:/opt/kafka/config/kraft/server.properties
     # entrypoint:
     #   - sh
     #   - -c

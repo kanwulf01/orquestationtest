@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { Button, CircularProgress, FormControl, InputLabel,TextField} from '@mui/material';
+import { Button, CircularProgress, FormControl, InputLabel,TablePagination,TextField} from '@mui/material';
 import type { PropsTableModel } from '../../Models/Models';
 import MuiSelect from '../SelectModel/SelectModel';
 import type { PermisosDtoPost } from '../../Models/Response';
@@ -70,7 +70,6 @@ function Row(props: {
 
   const findTipoPermisoLabel = (id: number | string) => {
     const tipoPermisoItem = listTipoPermisos?.find(item => item.value === id);
-    // console.log('findTipoPermisoLabel', tipoPermisoItem, id);
     return tipoPermisoItem ? tipoPermisoItem.label : '';
   };
 
@@ -92,7 +91,7 @@ function Row(props: {
     for(const i in dataPost) {
       if(dataPost[i as keyof PermisosDtoPost] === '' || dataPost[i as keyof PermisosDtoPost] === null) {
         console.error(`El campo ${i} es obligatorio`);
-        alert(`El campo Tipo de Permiso es obligatorio seleccionarlo`);
+        alert(`El campo Tipo de Permiso es obligatorio seleccionarlo si desea modificar un permiso`);
         return;
       }
     }
@@ -161,7 +160,7 @@ function Row(props: {
                     <TableCell>
                       <TextField  
                       id="nombreEmpleado" 
-                      label="NombreEmpleado" 
+                      label="Nuevo Nombre Empleado" 
                       variant="outlined" 
                       value={nombreEmpleado} 
                       onChange={(e)=>setNombreEmpleado(e.target.value)} 
@@ -170,7 +169,7 @@ function Row(props: {
                     <TableCell>
                       <TextField 
                       id="apellidoEmpleado" 
-                      label="ApellidoEmpleado" 
+                      label="Nuevo Apellido Empleado" 
                       variant="outlined" 
                       value={apellidoEmpleado} 
                       onChange={(e)=>setApellidoEmpleado(e.target.value)} />
@@ -198,7 +197,7 @@ function Row(props: {
                     <TableCell align="right">
                       <FormControl fullWidth required>
                       {/* <InputLabel id="tipo-label">Tipo de Permiso</InputLabel> */}
-                      {<DatePickerModel onChangeFechaPermiso={onChangeFechaPermiso} label={"Fecha de Permiso"}/>}
+                      {<DatePickerModel onChangeFechaPermiso={onChangeFechaPermiso} label={"Nueva Fecha de Permiso"}/>}
                       </FormControl>
                     </TableCell>
                     {loading?<>
@@ -230,18 +229,56 @@ function Row(props: {
 
 export default function TableModel({columns, listPermisos, listTipoPermisos, UpdatePermisos}:PropsTableModel) {
 
-    let copyListPermisos = listPermisos.map((item) => {
-      let descripcionTipoPermiso = "";
-      let tipoPermisoId = 0;
-      if(item.tipoPermiso && item.tipoPermiso) {
-      descripcionTipoPermiso = item.tipoPermiso.descripcion;
-      tipoPermisoId = item.tipoPermiso.id;
-      } 
-      return createData2(item.id, item.nombreEmpleado, item.apellidoEmpleado, {descripcion:descripcionTipoPermiso, id:tipoPermisoId  }, item.fechaPermiso, []);
-    });
+  let copyListPermisos = listPermisos.map((item) => {
+    let descripcionTipoPermiso = "";
+    let tipoPermisoId = 0;
+    if(item.tipoPermiso && item.tipoPermiso) {
+    descripcionTipoPermiso = item.tipoPermiso.descripcion;
+    tipoPermisoId = item.tipoPermiso.id;
+    } 
+    return createData2(item.id, item.nombreEmpleado, item.apellidoEmpleado, {descripcion:descripcionTipoPermiso, id:tipoPermisoId  }, item.fechaPermiso, []);
+  });
 
+  const rows = Array.from({ length: copyListPermisos.length }, (_, i) => ({
+    id: i + 1,
+    name: `Usuario ${i + 1}`
+  }));
+
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5); 
+  const [filterN, setFilterN] = React.useState("");
+
+  const handleChangePage = (_: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0); 
+  };
+
+  const handleFilterChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterN(event.target.value);
+    setPage(0);
+  }
+
+  let filterredRows = copyListPermisos.filter(row => row.nombreEmpleado.toLowerCase().includes(filterN.toLowerCase()));
+  const paginatedRows = filterredRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+  
   return (
-    <TableContainer component={Paper}>
+    <>
+    <Paper sx={{padding: 2}}>
+      <Box sx={{ marginBottom: 2 }}>
+        <TextField
+          label="Filtrar por nombre"
+          variant="outlined"
+          value={filterN}
+          onChange={handleFilterChangeName}
+          fullWidth
+        />
+      </Box>
+    </Paper>
+      <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
@@ -259,8 +296,8 @@ export default function TableModel({columns, listPermisos, listTipoPermisos, Upd
           </TableRow>
         </TableHead>
         <TableBody>
-          {copyListPermisos.map((row) => (
-            <Row key={row.nombreEmpleado} 
+          {paginatedRows.map((row) => (
+            <Row key={`${row.nombreEmpleado}--${row.Id}-${row.tipoPermiso}`} 
               row={row} 
               listTipoPermisos={listTipoPermisos}
               UpdatePermisos={UpdatePermisos}
@@ -269,5 +306,16 @@ export default function TableModel({columns, listPermisos, listTipoPermisos, Upd
         </TableBody>
       </Table>
     </TableContainer>
+     <TablePagination
+        component="div"
+        count={rows.length}
+        page={page}
+        onPageChange={handleChangePage}
+        rowsPerPage={rowsPerPage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        rowsPerPageOptions={[5, 10, 25]}
+        labelRowsPerPage="Filas por página"
+      />
+    </>
   );
 }

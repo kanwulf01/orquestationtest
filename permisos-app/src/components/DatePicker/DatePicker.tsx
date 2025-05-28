@@ -12,8 +12,8 @@ const DatePickerModel = ({onChangeFechaPermiso, label}:Props) => {
 
     return (
         <>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DemoContainer components={['DateTimePicker']}>
+        <LocalizationProvider dateAdapter={AdapterDayjs} >
+            <DemoContainer  components={['DateTimePicker']}>
             <DateTimePicker label={label} onChange={(e)=>onChangeFechaPermiso(e)}/>
             </DemoContainer>
         </LocalizationProvider> 

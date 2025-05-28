@@ -6,7 +6,7 @@ using Infrastructure.Messaging;
 using Nest;
 
 Console.WriteLine("⏳ Delaying startup to wait for Kafka...");
-await Task.Delay(TimeSpan.FromSeconds(50)); 
+await Task.Delay(TimeSpan.FromSeconds(60)); 
 AppContext.SetSwitch("Switch.Microsoft.Data.SqlClient.DisableEncryption", true);
 
 var builder = WebApplication.CreateBuilder(args);

@@ -141,7 +141,7 @@ namespace Infrastructure.Messaging
             private async Task ProcessMessageAsync(string message)
             {
                 await Task.Delay(100);
-                _logger.LogInformation($"Mensaje procesado: {message}");
+                _logger.LogInformation($"******MENSAJE PROCESADO EN KAFKA*********: {message}");
             }
 
             public override void Dispose()

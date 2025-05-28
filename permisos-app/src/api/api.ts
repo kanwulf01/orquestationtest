@@ -1,6 +1,7 @@
 
 //const URL = "https://localhost:44394/api/"
-const URL = "http://localhost:32768/api/";
+//const URL = "http://localhost:32768/api/";
+const URL = import.meta.env.VITE_API_URL
 import axios from 'axios';
 import type { PermisosDto, PermisosDtoPost, TipoPermisoDto } from '../Models/Response';
 
