@@ -72,3 +72,4 @@ TestResults/
 ## Archivos de configuración de Resharper
 _ReSharper*/
 *.DotSettings.user
+.cache
