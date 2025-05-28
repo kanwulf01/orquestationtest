@@ -8,6 +8,6 @@ namespace Application.Interfaces
 {
     public interface IKafkaServices
     {
-        Task ProduceAsync(string topic, string message);
+        Task ProduceAsync<T>(string topic, T message);
     }
 }

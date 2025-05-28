@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Infrastructure.Messaging
@@ -21,7 +22,7 @@ namespace Infrastructure.Messaging
 
             var producerConfig = new ProducerConfig
             {
-                BootstrapServers = "kafka:9001",
+                BootstrapServers = config["Kafka:BootstrapServers"],
                 MessageTimeoutMs = 30000,
                 EnableDeliveryReports = true,
                 Acks = Acks.Leader
@@ -33,14 +34,16 @@ namespace Infrastructure.Messaging
                 .Build();
         }
 
-        public async Task ProduceAsync(string topic, string message)
+        public async Task ProduceAsync<T>(string topic, T message)
         {
             try
             {
-                var deliveryResult = await _producer.ProduceAsync(topic,
-                    new Message<Null, string> { Value = message });
+                var json = JsonSerializer.Serialize(message);
+                var topicPartition = new TopicPartition(topic, new Partition(2));
+                var deliveryResult = await _producer.ProduceAsync(topicPartition,
+                    new Message<Null, string> { Value = json });
 
-                _logger.LogInformation($"Entregado a: {deliveryResult.TopicPartitionOffset}");
+                _logger.LogInformation($"*** ENTREGADO A ***: {deliveryResult.TopicPartitionOffset}");
             }
             catch (ProduceException<Null, string> e)
             {

@@ -1,10 +1,12 @@
-﻿using Application.Mapping;
+﻿using Application.Interfaces;
+using Application.Mapping;
 using Application.Permisos.Commands.CreatePermisos;
 using Infrastructure;
 using Infrastructure.Messaging;
+using Nest;
 
 Console.WriteLine("⏳ Delaying startup to wait for Kafka...");
-await Task.Delay(TimeSpan.FromSeconds(3)); 
+await Task.Delay(TimeSpan.FromSeconds(60)); 
 AppContext.SetSwitch("Switch.Microsoft.Data.SqlClient.DisableEncryption", true);
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,16 +16,16 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("MiPoliticaCors", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.AllowAnyOrigin()
           .AllowAnyHeader()
-          .AllowAnyMethod()
-          .AllowCredentials();
+          .AllowAnyMethod();
+          //.AllowCredentials();
     });
 });
 
+
 // Kafka Services
-//builder.Services.AddSingleton<KafkaProducer>();
-//builder.Services.AddHostedService<KafkaConsumer>();
+builder.Services.AddHostedService<KafkaConsumer>();
 
 // Add services to the container.
 
@@ -52,7 +54,7 @@ if (true)
 
 //app.UseHttpsRedirection();
 
-app.UseAuthorization();
+//app.UseAuthorization();
 
 app.UseCors("MiPoliticaCors");
 

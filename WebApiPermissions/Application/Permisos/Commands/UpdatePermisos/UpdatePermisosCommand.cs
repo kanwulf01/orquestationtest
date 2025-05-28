@@ -14,6 +14,8 @@ namespace Application.Permisos.Commands.UpdatePermisos
 
         public string NombreEmpleado { get; set; } = string.Empty;
         public string ApellidoEmpleado { get; set; } = string.Empty;
+
+        public int TipoPermisoId { get; set; }
         public int TipoPermiso { get; set; }
 
         public DateTime FechaPermiso { get; set; }

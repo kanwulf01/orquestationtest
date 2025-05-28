@@ -16,8 +16,12 @@ namespace Domain.Entities
         [Required]
         public string ApellidoEmpleado { get; private set; } = string.Empty;
 
-        [Required]
-        public int TipoPermiso { get; private set; }
+        [Column("TipoPermiso")]
+        public int TipoPermisoId { get; private set; }
+
+        //[ForeignKey(nameof(TipoPermisoId))]
+        [NotMapped]
+        public TipoPermiso TipoPermiso { get; private set; } = default;
 
         [Required]
         public DateTime FechaPermiso { get; private set; }
@@ -41,7 +45,7 @@ namespace Domain.Entities
                 //Id = id,
                 NombreEmpleado = nombreEmpleado,
                 ApellidoEmpleado = apellidoEmpleado,
-                TipoPermiso = TipoPermiso,
+                TipoPermisoId = TipoPermiso,
                 FechaPermiso = fechaPermiso
             };
         }
@@ -57,12 +61,12 @@ namespace Domain.Entities
 
             if (string.IsNullOrEmpty(nombreEmpleado)) throw new ArgumentException("El nombre del empleado no puede ser vacio");
             if (string.IsNullOrEmpty(apellidoEmpleado)) throw new ArgumentException("El apellido del empleado no puede ser vacio");
-            if (TipoPermiso == 0) throw new ArgumentException("Necesita un tipo de permiso de forma obligatoria");
+            if (TipoPermisoId == 0) throw new ArgumentException("Necesita un tipo de permiso de forma obligatoria");
 
             //Id = id;
             NombreEmpleado = nombreEmpleado;
             ApellidoEmpleado = apellidoEmpleado;
-            TipoPermiso = tipoPermiso;
+            TipoPermisoId = tipoPermiso;
             FechaPermiso = fechaPermiso;
 
         }

@@ -8,8 +8,10 @@ namespace Application.Mapping
     {
         public PermisosProfile() {
 
-            CreateMap<Permiso, PermisosDto>().ReverseMap();
-
+            CreateMap<Permiso, PermisosDto>()           
+            .ForMember(dest => dest.TipoPermiso,
+                       opt => opt.MapFrom(src => src.TipoPermiso));
+            CreateMap<TipoPermiso, PermisosTypeDto>();
 
         }    
     }

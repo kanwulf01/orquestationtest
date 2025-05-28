@@ -9,3 +9,4 @@ C:\Users\Cris\Desktop\orquestationPermisos\WebApiPermissions\Domian\obj\Debug\ne
 C:\Users\Cris\Desktop\orquestationPermisos\WebApiPermissions\Domian\obj\Debug\net8.0\refint\Domain.dll
 C:\Users\Cris\Desktop\orquestationPermisos\WebApiPermissions\Domian\obj\Debug\net8.0\Domain.pdb
 C:\Users\Cris\Desktop\orquestationPermisos\WebApiPermissions\Domian\obj\Debug\net8.0\ref\Domain.dll
+C:\Users\Cris\Desktop\orquestationPermisos\WebApiPermissions\Domian\obj\Debug\net8.0\Domain.sourcelink.json
