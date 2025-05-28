@@ -26,7 +26,7 @@ namespace Infrastructure.Messaging
                 // 1. Configuración movida a campo de clase
                 _consumerConfig = new ConsumerConfig
                 {
-                    BootstrapServers = "kafka:9001",
+                    BootstrapServers = config["Kafka:BootstrapServers"],
                     GroupId = "my-permisos",
                     AutoOffsetReset = AutoOffsetReset.Earliest,
                     EnableAutoCommit = false
@@ -38,7 +38,7 @@ namespace Infrastructure.Messaging
                     .Build();
 
                 // Configurar partición específica
-                var topic = "permisos";
+                var topic = config["Kafka:TopicName"];
                 var partition = new Partition(2);
                 _topicPartition = new TopicPartition(topic, partition);
 
@@ -141,7 +141,7 @@ namespace Infrastructure.Messaging
             private async Task ProcessMessageAsync(string message)
             {
                 await Task.Delay(100);
-                _logger.LogInformation($"Mensaje procesado: {message}");
+                _logger.LogInformation($"******MENSAJE PROCESADO EN KAFKA*********: {message}");
             }
 
             public override void Dispose()

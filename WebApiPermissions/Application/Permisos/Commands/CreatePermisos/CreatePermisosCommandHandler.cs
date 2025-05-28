@@ -24,7 +24,7 @@ namespace Application.Permisos.Commands.CreatePermisos
                 request.Id,
                 request.NombreEmpleado,
                 request.ApellidoEmpleado,
-                request.TipoPermiso,
+                request.TipoPermisoId,
                 request.FechaPermiso
                 );
 

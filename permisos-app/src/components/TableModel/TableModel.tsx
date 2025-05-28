@@ -12,35 +12,21 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { Button, MenuItem, OutlinedInput, Select, TextField, useTheme, type SelectChangeEvent, type Theme } from '@mui/material';
+import { Button, CircularProgress, FormControl, InputLabel,TablePagination,TextField} from '@mui/material';
 import type { PropsTableModel } from '../../Models/Models';
-
-function getStyles(name: string, personName: string[], theme: Theme) {
-  return {
-    fontWeight: personName.includes(name)
-      ? theme.typography.fontWeightMedium
-      : theme.typography.fontWeightRegular,
-  };
-}
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
-
+import MuiSelect from '../SelectModel/SelectModel';
+import type { PermisosDtoPost } from '../../Models/Response';
+import DatePickerModel from '../DatePicker/DatePicker';
 
 
 function createData2(
   Id: number,
   nombreEmpleado: string,
   apellidoEmpleado: string,
-  tipoPermiso: number,
+  tipoPermiso: {
+    descripcion: string,
+    id: number
+  },
   fechaPermiso: string,
   history:[]
 ) {
@@ -55,38 +41,92 @@ function createData2(
 }
 
 
-
-interface SelectItems {
-    key: number;
-    value: string;
-}
-const types:Array<SelectItems> = [
-  {key:1, value: "Vacaciones"},
-  {key:2, value: "Enfermedad"},
-];
-
-
-
-
-function Row(props: { row: ReturnType<typeof createData2> }) {
-  const { row } = props;
+function Row(props: { 
+  row: ReturnType<typeof createData2>, 
+  listTipoPermisos?: Array<{value: number | string, label: string}>,
+  UpdatePermisos: (permiso: PermisosDtoPost) => Promise<PermisosDtoPost>;
+  // function:React.Node
+}) {
+  
+  const { row, listTipoPermisos, UpdatePermisos } = props;
   const [open, setOpen] = React.useState(false);
 
-  console.log('Row', row);
+  const [nombreEmpleado, setNombreEmpleado] = React.useState<string>('');
+  const [apellidoEmpleado, setApellidoEmpleado] = React.useState<string>('');
+  const [tipoPermiso, setTipoPermiso] = React.useState<number>(0);
+  const [tipoPermisoV, setTipoPermisoV] = React.useState<string>("");
+  const [fechaPermiso, setFechaPermiso] = React.useState<string>('');
+  const [loading, setLoading] = React.useState<boolean>(false);
 
-  const theme = useTheme();
-  const [personName, setPersonName] = React.useState<string[]>([]);
+  React.useEffect(() => {
+    setNombreEmpleado(row.nombreEmpleado);
+    setApellidoEmpleado(row.apellidoEmpleado);
+    setTipoPermiso(row.tipoPermiso.id);
+    setFechaPermiso(row.fechaPermiso);
+    setTipoPermisoV(row.tipoPermiso.id.toString());
+    // console.log('useEffect row', row);
+  }, [row]);
 
-  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-    console.log('handleChange', event);
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
+
+  const findTipoPermisoLabel = (id: number | string) => {
+    const tipoPermisoItem = listTipoPermisos?.find(item => item.value === id);
+    return tipoPermisoItem ? tipoPermisoItem.label : '';
   };
+
+  const SendUpdatePermisos = async () => {
+    if(!nombreEmpleado || !apellidoEmpleado || !tipoPermiso || !fechaPermiso) {
+      alert('Todos los campos son obligatorios');
+      return;
+    }
+    const dataPost:PermisosDtoPost = {
+      id: row.Id,
+      nombreEmpleado: nombreEmpleado,
+      apellidoEmpleado: apellidoEmpleado,
+      tipoPermisoId: tipoPermiso,
+      fechaPermiso: fechaPermiso,
+      tipoPermiso: 0, // Este campo puede ser utilizado para indicar el tipo de permiso si es necesario
+      tipoPermisoLabel: findTipoPermisoLabel(tipoPermisoV)
+    };
+
+    for(const i in dataPost) {
+      if(dataPost[i as keyof PermisosDtoPost] === '' || dataPost[i as keyof PermisosDtoPost] === null) {
+        console.error(`El campo ${i} es obligatorio`);
+        alert(`El campo Tipo de Permiso es obligatorio seleccionarlo si desea modificar un permiso`);
+        return;
+      }
+    }
+    setLoading(true);
+    const sendUpdateData = await UpdatePermisos(dataPost);
+
+    if(sendUpdateData) {
+      setLoading(false);
+    }else {
+      setLoading(false);
+    }
+
+  }
+
+  const onChangeFechaPermiso = (value: any) => {
+    // console.log('onChangeFechaPermiso', value);
+    if(value && value.$d) {
+      const date = new Date(value.$d);
+      // const formattedDate = date.toLocaleString('es-CO', {
+      //   timeZone: 'America/Bogota',
+      //   year: 'numeric',
+      //   month: '2-digit',
+      //   day: '2-digit',
+      //   hour: '2-digit',
+      //   minute: '2-digit',
+      //   second: '2-digit',
+      //   hour12: false
+      // }).replace(',', '');
+      const formattedDate = date.toISOString();
+      setFechaPermiso(formattedDate);
+      console.log("Fecha formateada:", formattedDate);
+    } else {
+      console.error('Invalid date value', value);
+    }
+  }
 
   return (
     <React.Fragment>
@@ -104,7 +144,7 @@ function Row(props: { row: ReturnType<typeof createData2> }) {
           {row.nombreEmpleado}
         </TableCell>
         <TableCell align="left">{row.apellidoEmpleado}</TableCell>
-        <TableCell align="left">{row.tipoPermiso}</TableCell>
+        <TableCell align="left">{row.tipoPermiso.descripcion}</TableCell>
         <TableCell align="left">{row.fechaPermiso}</TableCell>
       </TableRow>
       <TableRow>
@@ -117,46 +157,61 @@ function Row(props: { row: ReturnType<typeof createData2> }) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell><TextField  id="nombreEmpleado" label="NombreEmpleado" variant="outlined" /></TableCell>
-                    <TableCell><TextField id="apellidoEmpleado" label="ApellidoEmpleado" variant="outlined" /></TableCell>
-                    <TableCell align="right"><TextField type='date' id="fechaPermiso" label="FechaPermiso"  /></TableCell>
-                    <TableCell align="right">
-                        <Select
-                            labelId="demo-multiple-name-label"
-                            id="demo-multiple-name"
-                            value={personName}
-                            onChange={handleChange}
-                            input={<OutlinedInput label="Name" />}
-                            MenuProps={MenuProps}
-                            >
-                            {types.map((name) => (
-                                <MenuItem
-                                key={name.key}
-                                value={name.value}
-                                style={getStyles(name.value, personName, theme)}
-                                >
-                                {name.value}
-                                </MenuItem>
-                            ))}
-                            </Select>
+                    <TableCell>
+                      <TextField  
+                      id="nombreEmpleado" 
+                      label="Nuevo Nombre Empleado" 
+                      variant="outlined" 
+                      value={nombreEmpleado} 
+                      onChange={(e)=>setNombreEmpleado(e.target.value)} 
+                      />
                     </TableCell>
-                    <TableCell align="right"><Button>Modificar</Button></TableCell>
+                    <TableCell>
+                      <TextField 
+                      id="apellidoEmpleado" 
+                      label="Nuevo Apellido Empleado" 
+                      variant="outlined" 
+                      value={apellidoEmpleado} 
+                      onChange={(e)=>setApellidoEmpleado(e.target.value)} />
+                    </TableCell>
+                    
+                    <TableCell align="right">
+                        <FormControl fullWidth required>
+                        <InputLabel id="tipo-label">Tipo de Permiso</InputLabel>
+                          <MuiSelect
+                            label="Tipo Permiso"
+                            options={listTipoPermisos?.map((item) => ({
+                              value: item.value,
+                              label: item.label,
+                            })) || []}
+                            value={tipoPermisoV}
+                            onChange={(value) => {
+                              console.log('onChange tipoPermiso', value);
+                              setTipoPermiso(parseInt(value as string, 10));
+                              setTipoPermisoV(value as string);
+                            }}
+                     >
+                        </MuiSelect>
+                        </FormControl>
+                    </TableCell>
+                    <TableCell align="right">
+                      <FormControl fullWidth required>
+                      {/* <InputLabel id="tipo-label">Tipo de Permiso</InputLabel> */}
+                      {<DatePickerModel onChangeFechaPermiso={onChangeFechaPermiso} label={"Nueva Fecha de Permiso"}/>}
+                      </FormControl>
+                    </TableCell>
+                    {loading?<>
+                      <TableCell align="right">
+                        <CircularProgress />
+                      </TableCell>
+                    </>:<>
+                      <TableCell align="right"><Button onClick={()=>SendUpdatePermisos()}>Modificar</Button></TableCell>
+                    </>}
                   </TableRow>
                 </TableHead>
                 
                 <TableBody>
-                  {/* {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.date}
-                      </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
-                      </TableCell>
-                    </TableRow>
-                  ))} */}
+                  
                 </TableBody>
                 <>
                 </>
@@ -172,16 +227,58 @@ function Row(props: { row: ReturnType<typeof createData2> }) {
 
 
 
-export default function TableModel({tittle, columns, listPermisos, listTipoPermisos}:PropsTableModel) {
-    console.log('TableModel lista permisos', listPermisos);
-    console.log('TableModel', tittle);
-    console.log('TableModel', columns);
-    console.log('TableModel', listTipoPermisos);
-    let copyListPermisos = listPermisos.map((item) => {
-        return createData2(item.id, item.nombreEmpleado, item.apellidoEmpleado, item.tipoPermiso, item.fechaPermiso, []);
-    });
+export default function TableModel({columns, listPermisos, listTipoPermisos, UpdatePermisos}:PropsTableModel) {
+
+  let copyListPermisos = listPermisos.map((item) => {
+    let descripcionTipoPermiso = "";
+    let tipoPermisoId = 0;
+    if(item.tipoPermiso && item.tipoPermiso) {
+    descripcionTipoPermiso = item.tipoPermiso.descripcion;
+    tipoPermisoId = item.tipoPermiso.id;
+    } 
+    return createData2(item.id, item.nombreEmpleado, item.apellidoEmpleado, {descripcion:descripcionTipoPermiso, id:tipoPermisoId  }, item.fechaPermiso, []);
+  });
+
+  const rows = Array.from({ length: copyListPermisos.length }, (_, i) => ({
+    id: i + 1,
+    name: `Usuario ${i + 1}`
+  }));
+
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5); 
+  const [filterN, setFilterN] = React.useState("");
+
+  const handleChangePage = (_: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0); 
+  };
+
+  const handleFilterChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFilterN(event.target.value);
+    setPage(0);
+  }
+
+  let filterredRows = copyListPermisos.filter(row => row.nombreEmpleado.toLowerCase().includes(filterN.toLowerCase()));
+  const paginatedRows = filterredRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+  
   return (
-    <TableContainer component={Paper}>
+    <>
+    <Paper sx={{padding: 2}}>
+      <Box sx={{ marginBottom: 2 }}>
+        <TextField
+          label="Filtrar por nombre"
+          variant="outlined"
+          value={filterN}
+          onChange={handleFilterChangeName}
+          fullWidth
+        />
+      </Box>
+    </Paper>
+      <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
@@ -199,11 +296,26 @@ export default function TableModel({tittle, columns, listPermisos, listTipoPermi
           </TableRow>
         </TableHead>
         <TableBody>
-          {copyListPermisos.map((row) => (
-            <Row key={row.nombreEmpleado} row={row} />
+          {paginatedRows.map((row) => (
+            <Row key={`${row.nombreEmpleado}--${row.Id}-${row.tipoPermiso}`} 
+              row={row} 
+              listTipoPermisos={listTipoPermisos}
+              UpdatePermisos={UpdatePermisos}
+            />
           ))}
         </TableBody>
       </Table>
     </TableContainer>
+     <TablePagination
+        component="div"
+        count={rows.length}
+        page={page}
+        onPageChange={handleChangePage}
+        rowsPerPage={rowsPerPage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        rowsPerPageOptions={[5, 10, 25]}
+        labelRowsPerPage="Filas por página"
+      />
+    </>
   );
 }

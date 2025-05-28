@@ -5,7 +5,7 @@ set -e
 pid=$!
 
 echo "⏳ Esperando a que SQL Server arranque…"
-sleep 30
+sleep 50
 
 echo "🚀 Ejecutando init.sql…"
 /opt/mssql-tools/bin/sqlcmd \

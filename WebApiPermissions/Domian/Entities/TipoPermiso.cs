@@ -10,13 +10,16 @@ namespace Domain.Entities
     public class TipoPermiso
     {
         [Key]
-        public int Id { get; private set; }
+        public int Id { get;  set; }
 
         [Required]
-        public string Descripcion { get; private set; } = string.Empty;
+        public string Descripcion { get;  set; } = string.Empty;
+
+        public ICollection<Permiso> Permisos { get; private set; } = new List<Permiso>();
 
 
-        private TipoPermiso() { }
+
+        public TipoPermiso() { }
 
         public static TipoPermiso Create(
             int id,

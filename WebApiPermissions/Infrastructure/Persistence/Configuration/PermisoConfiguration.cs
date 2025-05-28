@@ -21,8 +21,16 @@ namespace Infrastructure.Persistence.Configuration
                 .HasMaxLength(200)
                 .IsRequired();
 
-            builder.Property(p => p.TipoPermiso)
+            builder.Property(p => p.TipoPermisoId)
+                .HasColumnName("TipoPermiso")
                 .IsRequired();
+
+            builder.HasOne(p => p.TipoPermiso)
+                .WithMany(p => p.Permisos)
+                .HasForeignKey(p => p.TipoPermisoId)
+                .IsRequired();
+
+     
 
             builder.Property(p => p.FechaPermiso)
                 .IsRequired()
